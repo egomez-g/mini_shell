@@ -3,8 +3,10 @@ CFLAGS = -Wall -Werror -Wextra
 
 NAME = mini_shell
 
-SRCS =	main.c 			\
-		parse/parse.c	\
+SRCS =	main.c 				\
+		parse/parse.c		\
+		parse/list_cmd.c	\
+		parse/file_finder.c	\
 
 OBJS = $(SRCS:.c=.o)
 
