@@ -1,25 +1,31 @@
 #include "../mini_shell.h"
 
-static void init_struct(t_mini_shell *ms)
+static void	quote_count(char *txt)
 {
-	int	i;
+	int	single_quote;
 
-	i = 0;
-	ms->cmds = NULL;
-	while (i < ms->num_cmds)
+	single_quote = 0;
+	while(*txt)
 	{
-		new_list(ms);
-		i++;
+		if (*txt == '\'' || *txt == '\"')
+			single_quote++;
+		txt++;
+	}
+	if (single_quote % 2 != 0)
+	{
+		perror("Error");
+		exit (1);
 	}
 }
+
 static void	fill_struct(char *txt, t_mini_shell *ms)
 {
-	ms->infile = NULL;
+	quote_count(txt);
 	find_infile(txt, ms);
+	find_outfile(txt, ms);
+	parser_cmd(txt, ms);
 	/*
-	encontrar infile
 	encontrar cmd y flags
-	encontrar outfile
 	*/
 }
 
@@ -27,7 +33,7 @@ static void	cmd_count(char *str, t_mini_shell *ms)
 {
 	ms->num_cmds = 1;
 	if (!str)
-		return (perror(""));
+		return (perror("Error"));
 	while (*str)
 	{
 		if (*str == '|')
@@ -42,13 +48,16 @@ void	parse(char* txt, char **envp)
 
 	ms.envp = envp;
 	cmd_count(txt, &ms);
-	init_struct(&ms);
+	ms.cmds = malloc (sizeof(t_cmds) * ms.num_cmds);
+	if (!ms.cmds)
+		return ;
 	fill_struct(txt, &ms);
 	/*
 	haces las estructuras
 	rellenas las estructuras
 	se lo pasas al pipex
 	*/
-	printf("Infile: %s\n", ms.infile);
+//	pipex(int argc, char **argv, char **envp)
+//	printf("Infile: %s\n", ms.infile);
 	exit (0);
 }
