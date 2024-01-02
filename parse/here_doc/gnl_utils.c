@@ -16,7 +16,7 @@ int	ft_find_line(char *buff)
 	return (0);
 }
 
-char	*ft_substr(char const *s, unsigned int str, size_t len)
+/*char	*ft_substr(char const *s, unsigned int str, size_t len)
 {
 	char	*p;
 	size_t	i;
@@ -38,7 +38,7 @@ char	*ft_substr(char const *s, unsigned int str, size_t len)
 	}
 	p[i] = '\0';
 	return (p);
-}
+}*/
 
 size_t	gnl_strlen(const char *str)
 {

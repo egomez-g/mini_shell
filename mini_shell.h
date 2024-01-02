@@ -40,6 +40,8 @@ void	find_infile(char *txt, t_mini_shell *ms);
 
 void	find_outfile(char *txt, t_mini_shell *ms);
 
+void	parser_cmd(char *txt, t_mini_shell *ms);
+
 //void	find_cmd(char *txt, t_mini_shell *ms);
 
 void	heredoc(char *limitador, t_mini_shell *ms, int index);

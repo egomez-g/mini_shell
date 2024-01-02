@@ -32,6 +32,7 @@ void	find_outfile(char *txt, t_mini_shell *ms)
 	int		index;
 
 	index = 0;
+	ms->cmds[0].outfile = NULL;
 	while (*txt)
 	{
 		if (*txt == '|')

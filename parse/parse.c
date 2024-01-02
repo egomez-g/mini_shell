@@ -20,13 +20,21 @@ static void	quote_count(char *txt)
 
 static void	fill_struct(char *txt, t_mini_shell *ms)
 {
+	int	i;
+
 	quote_count(txt);
 	find_infile(txt, ms);
 	find_outfile(txt, ms);
 	parser_cmd(txt, ms);
-	/*
-	encontrar cmd y flags
-	*/
+	i = 0;
+	while (i < ms->num_cmds)
+	{
+		printf("CMD: %s\n", ms->cmds[i].cmd);
+		printf("INFILE: %s\n", ms->cmds[i].infile);
+		printf("OUTFILE: %s\n", ms->cmds[i].outfile);
+		i++;
+	}
+	//ls <infile wtf? el codigo funciona a veces si, a veces no. GOD
 }
 
 static void	cmd_count(char *str, t_mini_shell *ms)

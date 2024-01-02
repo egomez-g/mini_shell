@@ -50,6 +50,7 @@ void	find_infile(char *txt, t_mini_shell *ms)
 
 	index = 0;
 	ms->cmds[index].here_doc = 0;
+	ms->cmds[0].infile = NULL;
 	while (*txt)
 	{
 		if (*txt == '|')
