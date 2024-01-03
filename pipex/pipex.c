@@ -1,33 +1,28 @@
-#include "../mini_shell.h"
+//#include "../mini_shell.h"
 
-void	close_parent(t_pipex *pipex)
-{
-	int	i;
+//void	close_parent(t_mini_shell *ms)
+//{
+//	int	i;
 
-	i = 0;
-	while (pipex->childs[i] != -1)
-	{
-		waitpid(pipex->childs[i], NULL, 0);
-		++i;
-	}
-	close(pipex->fd_file_in);
-	close(pipex->fd_file_out);
-}
+//	i = 0;
+//	while (ms->childs[i] != -1)
+//	{
+//		waitpid(ms->childs[i], NULL, 0);
+//		++i;
+//	}
+//	//close(ms->fd_file_in);
+//	//close(ms->fd_file_out);
+//}
 
-int	pipex(int argc, char **argv, char **envp)
-{
-	t_pipex	pipex;
+//int	pipex(t_mini_shell *ms)
+//{
+//	if (do_forks(ms) == 1)
+//		exit(1);
 
-	pipex.envp = envp;
-	pipex.argc = argc;
-	pipex.argv = argv;
-//	if (manage_input(&pipex) == 1)		exit(1);
-	if (do_forks(&pipex) == 1)
-		exit(1);
-	close (pipex.new_tubes[0]);
-	close_parent(&pipex);
-	if (pipex.here_doc == 1)
-		unlink("here_doc");
-	free(pipex.childs);
-	exit(0);
-}
+//	close (ms->new_tubes[0]);
+//	close_parent(ms);
+
+//	free(ms->childs);
+//	exit(0);
+//}
+////

@@ -1,10 +1,10 @@
 #include "../mini_shell.h"
 
-static void	get_infile(char *txt, t_mini_shell *ms, int index)
+static char	*get_infile(char *txt)
 {
 	int	i;
 	int	end;
-	int	aux_fd;
+	char *infile;
 
 	i = 0;
 	end = 0;
@@ -13,19 +13,13 @@ static void	get_infile(char *txt, t_mini_shell *ms, int index)
 		i++;
 	while (txt[i + end] && ft_isalnum(txt[i + end]) == 1)
 		end++;
-	if (ms->cmds[index].infile != NULL)
-	{
-		aux_fd = open(ms->cmds[index].infile, O_RDONLY);
-		if(aux_fd != -1)
-			close(aux_fd);
-		free(ms->cmds[index].infile);
-	}
 	if (end > 0)
-		ms->cmds[index].infile = ft_substr(txt, i, i + end - 1);
+		infile = ft_substr(txt, i, i + end - 1);
 	else
-		ms->cmds[index].infile = NULL;
+		infile = NULL;
+	return (infile);
 }
-static char	*get_ilimit(char *txt)
+static char	*get_limit(char *txt)
 {
 	int	i;
 	int	end;
@@ -43,18 +37,57 @@ static char	*get_ilimit(char *txt)
 		return(ft_substr(txt, 0, 0));
 }
 
+void	count_infiles(char *txt, t_mini_shell *ms)
+{
+	int	i;
+	int	index;
+	int count;
+
+	count = 0;
+	i = 0;
+	index = 0;
+	while	(txt[i])
+	{
+		if (txt[i] == '|')
+		{
+			ms->cmds[index].infiles = (char **)malloc(sizeof(char *) * (count + 1));
+			if (!ms->cmds[index].infiles)
+				return ;
+			ms->cmds[index].infiles[count] = NULL;
+			++index;
+			count = 0;
+		}
+		else if (txt[i] == '<')
+		{
+			if (txt[i + 1] == '<')
+				i++;
+			else
+				count++;
+		}
+		++i;
+	}
+	ms->cmds[index].infiles = (char **)malloc(sizeof(char *) * (count + 1));
+	if (!ms->cmds[index].infiles)
+		return ;
+	ms->cmds[index].infiles[count] = NULL;
+}
+
 void	find_infile(char *txt, t_mini_shell *ms)
 {
 	char	*limitador;
 	int index;
+	int	file_index;
 
 	index = 0;
+	file_index = 0;
 	ms->cmds[index].here_doc = 0;
-	ms->cmds[0].infile = NULL;
+	ms->cmds[0].infiles = NULL;
+	count_infiles(txt, ms);
 	while (*txt)
 	{
 		if (*txt == '|')
 		{
+			file_index = 0;
 			ms->cmds[index].here_doc = 0;
 			index++;
 		}
@@ -75,17 +108,16 @@ void	find_infile(char *txt, t_mini_shell *ms)
 			if (*(txt + 1) == '<')
 			{
 				txt++;
-				limitador = get_ilimit(txt);
+				limitador = get_limit(txt);
 				heredoc(limitador, ms, index);
 				free(limitador);
 				ms->cmds[index].here_doc = 1;
 			}
 			else
 			{
-				get_infile(txt, ms, index);
-				if (ms->cmds[index].here_doc == 1)
-					unlink("here_doc");
+				ms->cmds[index].infiles[file_index] = get_infile(txt);
 				ms->cmds[index].here_doc = 0;
+				file_index++;
 			}
 		}
 		txt++;
@@ -93,3 +125,7 @@ void	find_infile(char *txt, t_mini_shell *ms)
 }
 
 //con heredoc lo haces siempre pero no lo usas si luego hay otro infile
+
+
+//hacer el heredoc aqui o en el pipex
+

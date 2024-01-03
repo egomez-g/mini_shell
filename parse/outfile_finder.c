@@ -1,10 +1,10 @@
 #include "../mini_shell.h"
 
-static void	get_outfile(char *txt, t_mini_shell *ms, int index)
+static char	*get_outfile(char *txt)
 {
-	int		i;
-	int		end;
-	int		fd_aux;
+	int	i;
+	int	end;
+	char *outfile;
 
 	i = 0;
 	end = 0;
@@ -13,30 +13,64 @@ static void	get_outfile(char *txt, t_mini_shell *ms, int index)
 		i++;
 	while (txt[i + end] && ft_isalnum(txt[i + end]) == 1)
 		end++;
-	if (ms->cmds[index].outfile != NULL)
-	{
-		//append
-		fd_aux = open(ms->cmds[index].outfile, O_WRONLY | O_TRUNC | O_CREAT, 0644);
-		if (fd_aux != -1)
-			close(fd_aux);
-		free(ms->cmds[index].outfile);			
-	}
 	if (end > 0)
-		ms->cmds[index].outfile = ft_substr(txt, i, i + end - 1);
+		outfile = ft_substr(txt, i, i + end - 1);
 	else
-		ms->cmds[index].outfile = ft_substr(txt, 0, 0);
+		outfile = NULL;
+	return (outfile);
+}
+
+void	count_outfiles(char *txt, t_mini_shell *ms)
+{
+	int	i;
+	int	index;
+	int count;
+
+	count = 0;
+	i = 0;
+	index = 0;
+	while	(txt[i])
+	{
+		if (txt[i] == '|')
+		{
+			ms->cmds[index].outfiles = (char **)malloc(sizeof(char *) * (count + 1));
+			if (!ms->cmds[index].outfiles)
+				return ;
+			ms->cmds[index].outfiles[count] = NULL;
+			++index;
+			count = 0;
+		}
+		else if (txt[i] == '>')
+		{
+			if (txt[i + 1] == '>')
+				i++;
+			else
+				count++;
+		}
+		++i;
+	}
+	ms->cmds[index].outfiles = (char **)malloc(sizeof(char *) * (count + 1));
+	if (!ms->cmds[index].outfiles)
+		return ;
+	ms->cmds[index].outfiles[count] = NULL;
 }
 
 void	find_outfile(char *txt, t_mini_shell *ms)
 {
 	int		index;
+	int		file_index;
 
 	index = 0;
-	ms->cmds[0].outfile = NULL;
+	file_index = 0;
+	ms->cmds[0].outfiles = NULL;
+	count_outfiles(txt, ms);
 	while (*txt)
 	{
 		if (*txt == '|')
+		{
+			file_index = 0;
 			index++;
+		}
 		if (*txt == '\"')
 		{
 			txt++;
@@ -57,7 +91,8 @@ void	find_outfile(char *txt, t_mini_shell *ms)
 				txt++;
 				ms->cmds->trunc = 0;
 			}
-			get_outfile(txt, ms, index);
+			ms->cmds[index].outfiles[file_index] = get_outfile(txt);
+			file_index++;
 		}
 		txt++;
 	}

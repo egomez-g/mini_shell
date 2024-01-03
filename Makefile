@@ -3,9 +3,8 @@ CFLAGS = -Wall -Werror -Wextra
 
 NAME = mini_shell
 
-SRCS =	main.c 						\
+SRCS =	main.c						\
 		parse/parse.c				\
-		parse/list_cmd.c			\
 		parse/infile_finder.c		\
 		parse/cmd_finder.c			\
 		parse/outfile_finder.c		\

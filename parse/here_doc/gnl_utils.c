@@ -16,20 +16,20 @@ int	ft_find_line(char *buff)
 	return (0);
 }
 
-/*char	*ft_substr(char const *s, unsigned int str, size_t len)
+char	*gnl_substr(char const *s, unsigned int str, size_t len)
 {
 	char	*p;
 	size_t	i;
 
 	i = 0;
-	if (str > ft_strlen(s))
+	if (str > gnl_strlen(s))
 		len = 0;
-	else if (len > (ft_strlen(s) - str))
-		len = ft_strlen(s) - str;
+	else if (len > (gnl_strlen(s) - str))
+		len = gnl_strlen(s) - str;
 	p = (char *)malloc(sizeof(char) * (len + 1));
 	if (p == NULL)
 		return (p);
-	if (ft_strlen(s) <= str)
+	if (gnl_strlen(s) <= str)
 		len = 0;
 	while (i < len && s[str + i] != '\0')
 	{
@@ -38,7 +38,7 @@ int	ft_find_line(char *buff)
 	}
 	p[i] = '\0';
 	return (p);
-}*/
+}
 
 size_t	gnl_strlen(const char *str)
 {

@@ -20,18 +20,21 @@ typedef struct s_cmds
 	char			*flags;
 	int				trunc;
 	int				here_doc;
-	char			*infile;
-	char			*outfile;
+	char			**infiles;
+	char			**outfiles;
 	int				fd_in;
 	int				tuvo[2];
 }t_cmds;
 
 typedef struct s_mini_shell
 {
+	char	**envp;
+	char	*path;
+	int		old_tubes[2];
+	int		new_tubes[2];
 	t_cmds	*cmds;
 	pid_t	*childs;
 	int		num_cmds;
-	char	**envp;
 }t_mini_shell;
 
 void	parse(char* txt, char **envp);
@@ -40,9 +43,7 @@ void	find_infile(char *txt, t_mini_shell *ms);
 
 void	find_outfile(char *txt, t_mini_shell *ms);
 
-void	parser_cmd(char *txt, t_mini_shell *ms);
-
-//void	find_cmd(char *txt, t_mini_shell *ms);
+void	find_cmd(char *txt, t_mini_shell *ms);
 
 void	heredoc(char *limitador, t_mini_shell *ms, int index);
 
@@ -51,6 +52,7 @@ char	*get_next_line(int fd);
 size_t	gnl_strlen(const char *str);
 int		ft_find_line(char *buff);
 char	*gnl_strjoin(char *s1, char const *s2);
+char	*gnl_substr(char const *s, unsigned int str, size_t len);
 
 
 ///////////////////////////////////////////POLLACULO///////////////////////////////////////////
@@ -73,17 +75,16 @@ typedef struct s_pipex
 }	t_pipex;
 
 //rutes
-int		get_vals(char *cmd, t_pipex *pipex);
-char	**get_paths(t_pipex *pipex);
+int		get_vals(char *cmd, t_mini_shell *ms);
+char	**get_paths(t_mini_shell *ms);
 
 //childs
-void	do_first_child(t_pipex *pipex);
-void	do_middle_child(t_pipex *pipex, char *arg);
-void	do_last_child(t_pipex *pipex);
+void	do_first_child(t_mini_shell *ms);
+void	do_middle_child(t_mini_shell *ms, char *arg);
+void	do_last_child(t_mini_shell *ms);
 
 //forks
-int		do_forks(t_pipex *pipex);
+int		do_forks(t_mini_shell *ms);
 
-
-int	pipex(int argc, char **argv, char **envp);
+int		pipex(t_mini_shell *ms);
 #endif

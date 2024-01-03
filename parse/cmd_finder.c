@@ -1,33 +1,81 @@
 #include "../mini_shell.h"
 
-void	parser_cmd(char *txt, t_mini_shell *ms)
+void	get_cmd(char *txt, t_mini_shell *ms, int index, int *i)
 {
-	int		i;
-	int		index;
-	char	**cmd_str;
+	int		end;
+	char	*aux;
 
-	cmd_str = ft_split(txt, ' ');
+	end = 0;
+	while (txt[*i + end] && (ft_isalnum(txt[*i + end]) || txt[*i + end]== '-'))
+		++end;
+	if (ms->cmds[index].cmd != NULL)
+		ms->cmds[index].cmd = gnl_strjoin(ms->cmds[index].cmd, " ");
+	aux = gnl_substr(txt, *i, end);
+	ms->cmds[index].cmd = gnl_strjoin(ms->cmds[index].cmd, aux);
+	free(aux);
+	*i += end;
+}
+
+void skip_spaces(char *txt, int *i)
+{
+	while (txt[*i] && (txt[*i] == ' ' || (txt[*i] <= 13 && txt[*i] >= 9)))
+		*i += 1;
+}
+
+void skip_file(char *txt, int *i)
+{
+	*i += 1;
+	if (txt[*i] && ft_isalnum(txt[*i]))
+	{
+		while (ft_isalnum(txt[*i]))
+			*i += 1;
+		return ;
+	}
+	else if (txt[*i] && (txt[*i] == ' ' || (txt[*i] <= 13 && txt[*i] >= 9)))
+	{
+		skip_spaces(txt, i);
+		while (ft_isalnum(txt[*i]))
+			*i += 1;
+	}
+}
+
+void	find_cmd(char *txt, t_mini_shell *ms)
+{
+	int	index;
+	int	i;
+
+	i = 0;
 	index = 0;
-	i = 0;
-
-	while (cmd_str[i])
+	while(i < ms->num_cmds)
 	{
-		if (ft_strncmp(cmd_str[i], "|", 1) == 0)
-			index++;
-		else if (ft_strncmp(cmd_str[i], "<", 1) == 0 || ft_strncmp(cmd_str[i], ">", 1) == 0)
+		ms->cmds[i].cmd = NULL;
+		i++;
+	}
+	i = 0;
+	while (txt[i])
+	{
+		if (txt[i] == '\"')
 		{
-			if(ft_strlen(cmd_str[i]) == 1)
-				i++;
+			txt++;
+			while (txt[i] != '\"')
+				txt++;
 		}
-		else
-			ms->cmds[index].cmd = gnl_strjoin(ms->cmds[index].cmd, cmd_str[i]);
-		i++;
+		if (txt[i] == '\'')
+		{
+			txt++;
+			while (txt[i] != '\'')
+				txt++;
+		}
+		if (txt[i] == '|')
+		{
+			index++;
+			i++;
+		}
+		else if (txt[i] == '<' || txt[i] == '>')
+			skip_file(txt, &i);
+		else if (ft_isalnum(txt[i]) || txt[i]== '-')
+			get_cmd(txt, ms,index, &i);
+		else if (txt[i] == ' ' || (txt[i] <= 13 && txt[i] >= 9))
+			skip_spaces(txt, &i);
 	}
-	i = 0;
-	while (cmd_str[i])
-	{
-		free(cmd_str[i]);
-		i++;
-	}
-	free(cmd_str);
 }

@@ -25,16 +25,31 @@ static void	fill_struct(char *txt, t_mini_shell *ms)
 	quote_count(txt);
 	find_infile(txt, ms);
 	find_outfile(txt, ms);
-	parser_cmd(txt, ms);
+	find_cmd(txt, ms);
 	i = 0;
 	while (i < ms->num_cmds)
 	{
 		printf("CMD: %s\n", ms->cmds[i].cmd);
-		printf("INFILE: %s\n", ms->cmds[i].infile);
-		printf("OUTFILE: %s\n", ms->cmds[i].outfile);
+		int j = 0;
+		while (ms->cmds[i].infiles[j])
+		{
+			printf("INFILE: %s\n", ms->cmds[i].infiles[j]);
+			j++;
+		}
+		j = 0;
+		while (ms->cmds[i].outfiles[j])
+		{
+			printf("OUTFILE: %s\n", ms->cmds[i].outfiles[j]);
+			j++;
+		}
+		printf("______________________________\n\n");
 		i++;
 	}
-	//ls <infile wtf? el codigo funciona a veces si, a veces no. GOD
+
+	//wc Makefile
+	//      46      94     729 Makefile
+	//wc<Makefile
+	//      46      94     729
 }
 
 static void	cmd_count(char *str, t_mini_shell *ms)
@@ -60,12 +75,8 @@ void	parse(char* txt, char **envp)
 	if (!ms.cmds)
 		return ;
 	fill_struct(txt, &ms);
-	/*
-	haces las estructuras
-	rellenas las estructuras
-	se lo pasas al pipex
-	*/
-//	pipex(int argc, char **argv, char **envp)
-//	printf("Infile: %s\n", ms.infile);
+
+	//pipex(&ms);
 	exit (0);
 }
+//checkea el heredoc para los tuboss
