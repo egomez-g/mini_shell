@@ -76,7 +76,7 @@ void	parse(char* txt, char **envp)
 		return ;
 	fill_struct(txt, &ms);
 
-	//pipex(&ms);
+	pipex(&ms);
 	exit (0);
 }
 //checkea el heredoc para los tuboss

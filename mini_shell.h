@@ -33,9 +33,8 @@ typedef struct s_mini_shell
 	int		old_tubes[2];
 	int		new_tubes[2];
 	t_cmds	*cmds;
-	pid_t	*childs;
 	int		num_cmds;
-	pidt	*childs;
+	pid_t	*childs;
 }t_mini_shell;
 
 void	parse(char* txt, char **envp);
@@ -59,7 +58,7 @@ char	*gnl_substr(char const *s, unsigned int str, size_t len);
 ///////////////////////////////////////////POLLACULO///////////////////////////////////////////
 
 
-typedef struct s_pipex
+/*typedef struct s_pipex
 {
 	char	**envp;
 	int		argc;
@@ -73,7 +72,7 @@ typedef struct s_pipex
 	char	**cmd;
 	int		*childs;
 	int		arg_i;
-}	t_pipex;
+}	t_pipex;*/
 
 //rutes
 int		get_vals(char *cmd, t_mini_shell *ms);
@@ -81,8 +80,8 @@ char	**get_paths(t_mini_shell *ms);
 
 //childs
 void	do_first_child(t_mini_shell *ms);
-void	do_middle_child(t_mini_shell *ms, char *arg);
-void	do_last_child(t_mini_shell *ms);
+void	do_middle_child(t_mini_shell *ms, int child_index);
+void	do_last_child(t_mini_shell *ms, int child_index);
 
 //forks
 int		do_forks(t_mini_shell *ms);
