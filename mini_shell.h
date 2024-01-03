@@ -35,6 +35,7 @@ typedef struct s_mini_shell
 	t_cmds	*cmds;
 	pid_t	*childs;
 	int		num_cmds;
+	pidt	*childs;
 }t_mini_shell;
 
 void	parse(char* txt, char **envp);
