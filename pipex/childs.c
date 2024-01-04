@@ -39,45 +39,52 @@ static int open_outfiles(t_mini_shell *ms, int index)
 	i = 0;
 	while (ms->cmds[index].outfiles[i])
 	{
-		fd = open(ms->cmds[index].outfiles[i], O_RDONLY);
+		fd = open(ms->cmds[index].outfiles[i], O_WRONLY | O_TRUNC | O_CREAT, 0644);
 		if (fd == -1)
 			exit_child(ms);
 		close(fd);
 		i++;
 	}
 	if (ms->cmds[index].trunc == 1)
-		fd = open(ms->cmds[index].infiles[i - 1], O_WRONLY | O_TRUNC | O_CREAT, 0644);
+	{
+		fd = open(ms->cmds[index].outfiles[i - 1], O_WRONLY | O_TRUNC | O_CREAT, 0644);
+	}
 	else
-		fd = open(ms->cmds[index].infiles[i - 1], O_WRONLY | O_APPEND | O_CREAT, 0644);
+		fd = open(ms->cmds[index].outfiles[i - 1], O_WRONLY | O_APPEND | O_CREAT, 0644);
 	return(fd);	
 }
 
 void	do_first_child(t_mini_shell *ms)
 {
-	int	fd_in = 0;
-	int	fd_out = 0;
+	int	fd_in;
+	int	fd_out;
 
-	if (ms->cmds[0].infiles != NULL || ms->cmds[0].here_doc == 1)
+	fd_in = 0;
+	fd_out = 0;
+	if (ms->cmds[0].infiles[0] != NULL || ms->cmds[0].here_doc == 1)
 	{
 		fd_in = open_infiles(ms, 0);
 		if (ms->cmds[0].here_doc == 1)
 			fd_in = ms->cmds[0].tuvo[0];
 		dup2(fd_in, 0);
 	}
-	if (ms->cmds[0].outfiles != NULL)
+	if (ms->cmds[0].outfiles[0] != NULL)
 	{
 		fd_out = open_outfiles(ms, 0);
 		dup2(fd_out, 1);
 	}
 	else
 		dup2(ms->new_tubes[1], 1);
+
 	close(ms->new_tubes[0]);
 	close(ms->new_tubes[1]);
 	close(fd_in);
 	close(fd_out);
 	close(ms->cmds[0].tuvo[0]);
 	close(ms->cmds[0].tuvo[1]);
-	execve("/bin/ls", ft_split(ms->cmds[0].cmd, ' '), ms->envp);
+
+	find_path(ms, 0);
+	execve(ms->cmds[0].path, ft_split(ms->cmds[0].cmd, ' '), ms->envp);
 	exit_child(ms);
 }
 
@@ -86,19 +93,25 @@ void	do_middle_child(t_mini_shell *ms, int child_index)
 	int	fd_in = 0;
 	int	fd_out = 0;
 
-	if (ms->cmds[child_index].infiles != NULL || ms->cmds[child_index].here_doc == 1)
+	if (ms->cmds[child_index].infiles[0] != NULL || ms->cmds[child_index].here_doc == 1)
 	{
 		fd_in = open_infiles(ms, child_index);
 		if (ms->cmds[child_index].here_doc == 1)
+		{
 			fd_in = ms->cmds[child_index].tuvo[0];
+			close(ms->cmds[child_index].tuvo[0]);
+			close(ms->cmds[child_index].tuvo[1]);
+		}
 		dup2(fd_in, 0);
+		close(fd_in);
 	}
 	else
 		dup2(ms->old_tubes[0], 0);
-	if (ms->cmds[child_index].outfiles != NULL)
+	if (ms->cmds[child_index].outfiles[0] != NULL)
 	{
 		fd_out = open_outfiles(ms, child_index);
 		dup2(fd_out, 1);
+		close(fd_out);
 	}
 	else
 		dup2(ms->new_tubes[1], 1);
@@ -106,11 +119,9 @@ void	do_middle_child(t_mini_shell *ms, int child_index)
 	close(ms->new_tubes[1]);
 	close(ms->old_tubes[0]);
 	close(ms->old_tubes[1]);
-	close(ms->cmds[child_index].tuvo[0]);
-	close(ms->cmds[child_index].tuvo[1]);
-	close(fd_in);
-	close(fd_out);
-	execve("/bin/ls", ft_split(ms->cmds[child_index].cmd, ' '), ms->envp);
+
+	find_path(ms, child_index);
+	execve(ms->cmds[child_index].path, ft_split(ms->cmds[0].cmd, ' '), ms->envp);
 	exit_child(ms);
 }
 
@@ -119,16 +130,23 @@ void	do_last_child(t_mini_shell *ms, int child_index)
 	int	fd_in = 0;
 	int	fd_out = 0;
 
-	if (ms->cmds[child_index].infiles != NULL || ms->cmds[child_index].here_doc == 1)
+	printf("HEREDOC %d\n", ms->cmds[child_index].here_doc);
+	printf("INFILE%s\n", ms->cmds[child_index].infiles[0]);
+	if (ms->cmds[child_index].infiles[0] != NULL || ms->cmds[child_index].here_doc == 1)
 	{
 		fd_in = open_infiles(ms, child_index);
 		if (ms->cmds[child_index].here_doc == 1)
+		{
 			fd_in = ms->cmds[child_index].tuvo[0];
+			close(ms->cmds[child_index].tuvo[0]);
+			close(ms->cmds[child_index].tuvo[1]);
+		}
 		dup2(fd_in, 0);
+		close(fd_in);
 	}
 	else
 		dup2(ms->new_tubes[0], 0);
-	if (ms->cmds[child_index].outfiles != NULL)
+	if (ms->cmds[child_index].outfiles[0] != NULL)
 	{
 		fd_out = open_outfiles(ms, child_index);
 		dup2(fd_out, 1);
@@ -136,11 +154,8 @@ void	do_last_child(t_mini_shell *ms, int child_index)
 	}
 	close(ms->new_tubes[0]);
 	close(ms->new_tubes[1]);
-	close(ms->cmds[child_index].tuvo[0]);
-	close(ms->cmds[child_index].tuvo[1]);
-	close(fd_in);
-	execve("/bin/ls", ft_split(ms->cmds[child_index].cmd, ' '), ms->envp);
+
+	find_path(ms, child_index);
+	execve(ms->cmds[child_index].path, ft_split(ms->cmds[0].cmd, ' '), ms->envp);
 	exit_child(ms);
-//	if (create_file(pipex->argv[pipex->argc - 1], pipex) == 1)		exit_child(pipex);
-//	if (get_vals(pipex->argv[pipex->argc - 2], pipex) == 1)		exit_child(pipex);
 }

@@ -13,18 +13,16 @@ void	close_parent(t_mini_shell *ms)
 	//close(ms->fd_file_in);
 	//close(ms->fd_file_out);
 }
-
-void	pipex(t_mini_shell *ms)
+void pipex (t_mini_shell *ms)
 {
-	ms->childs = malloc(sizeof(pid_t *) * ms->num_cmds);
-	if (ms->childs == NULL)
-		exit (1);
 	if (do_forks(ms) == 1)
 		exit(1);
 
-	close (ms->new_tubes[0]);
-	close_parent(ms);
-
+	waitpid(-1, NULL, 0);
+	close(ms->new_tubes[0]);
+	close(ms->new_tubes[1]);
+	close(ms->old_tubes[0]);
+	close(ms->old_tubes[1]);
 	free(ms->childs);
 	exit(0);
 }

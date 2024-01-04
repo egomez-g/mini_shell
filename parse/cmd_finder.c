@@ -6,7 +6,7 @@ void	get_cmd(char *txt, t_mini_shell *ms, int index, int *i)
 	char	*aux;
 
 	end = 0;
-	while (txt[*i + end] && (ft_isalnum(txt[*i + end]) || txt[*i + end]== '-'))
+	while (txt[*i + end] && (ft_valid_name_char(txt[*i + end]) || txt[*i + end]== '-'))
 		++end;
 	if (ms->cmds[index].cmd != NULL)
 		ms->cmds[index].cmd = gnl_strjoin(ms->cmds[index].cmd, " ");
@@ -25,16 +25,16 @@ void skip_spaces(char *txt, int *i)
 void skip_file(char *txt, int *i)
 {
 	*i += 1;
-	if (txt[*i] && ft_isalnum(txt[*i]))
+	if (txt[*i] && ft_valid_name_char(txt[*i]))
 	{
-		while (ft_isalnum(txt[*i]))
+		while (ft_valid_name_char(txt[*i]))
 			*i += 1;
 		return ;
 	}
 	else if (txt[*i] && (txt[*i] == ' ' || (txt[*i] <= 13 && txt[*i] >= 9)))
 	{
 		skip_spaces(txt, i);
-		while (ft_isalnum(txt[*i]))
+		while (ft_valid_name_char(txt[*i]))
 			*i += 1;
 	}
 }
@@ -73,7 +73,7 @@ void	find_cmd(char *txt, t_mini_shell *ms)
 		}
 		else if (txt[i] == '<' || txt[i] == '>')
 			skip_file(txt, &i);
-		else if (ft_isalnum(txt[i]) || txt[i]== '-')
+		else if (ft_valid_name_char(txt[i]) || txt[i]== '-')
 			get_cmd(txt, ms,index, &i);
 		else if (txt[i] == ' ' || (txt[i] <= 13 && txt[i] >= 9))
 			skip_spaces(txt, &i);

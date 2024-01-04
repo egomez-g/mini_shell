@@ -11,7 +11,7 @@ static char	*get_outfile(char *txt)
 	i++;
 	while (txt[i] && (txt[i] == ' ' || (txt[i] <= 13 && *txt >= 9)))
 		i++;
-	while (txt[i + end] && ft_isalnum(txt[i + end]) == 1)
+	while (txt[i + end] && ft_valid_name_char(txt[i + end]) == 1)
 		end++;
 	if (end > 0)
 		outfile = ft_substr(txt, i, i + end - 1);

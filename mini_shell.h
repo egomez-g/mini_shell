@@ -17,6 +17,7 @@
 typedef struct s_cmds
 {
 	char			*cmd;
+	char			*path;
 	char			*flags;
 	int				trunc;
 	int				here_doc;
@@ -29,7 +30,6 @@ typedef struct s_cmds
 typedef struct s_mini_shell
 {
 	char	**envp;
-	char	*path;
 	int		old_tubes[2];
 	int		new_tubes[2];
 	t_cmds	*cmds;
@@ -56,6 +56,11 @@ char	*gnl_substr(char const *s, unsigned int str, size_t len);
 
 
 ///////////////////////////////////////////POLLACULO///////////////////////////////////////////
+void	pipex(t_mini_shell *ms);
+
+int		do_forks(t_mini_shell *ms);
+
+void	do_one_child(t_mini_shell *ms);
 
 
 /*typedef struct s_pipex
@@ -74,8 +79,10 @@ char	*gnl_substr(char const *s, unsigned int str, size_t len);
 	int		arg_i;
 }	t_pipex;*/
 
+int		ft_valid_name_char(int c);
 //rutes
-int		get_vals(char *cmd, t_mini_shell *ms);
+void	find_path(t_mini_shell *ms, int cmd_index);
+
 char	**get_paths(t_mini_shell *ms);
 
 //childs
@@ -84,7 +91,4 @@ void	do_middle_child(t_mini_shell *ms, int child_index);
 void	do_last_child(t_mini_shell *ms, int child_index);
 
 //forks
-int		do_forks(t_mini_shell *ms);
-
-int		pipex(t_mini_shell *ms);
 #endif

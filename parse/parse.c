@@ -1,5 +1,15 @@
 #include "../mini_shell.h"
 
+
+int	ft_valid_name_char(int c)
+{
+	if (c != '!' && c != '?' && c != '<' && c != '>' && \
+	c != '(' && c != ')' &&c != '&' && c <=126 && c >= 33)
+		return (1);
+	else
+		return (0);
+}
+
 static void	quote_count(char *txt)
 {
 	int	single_quote;

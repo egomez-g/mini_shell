@@ -14,7 +14,7 @@ int	loop_fork(t_mini_shell *ms, int child_index)
 {
 	ms->old_tubes[0] = ms->new_tubes[0];
 	ms->old_tubes[1] = ms->new_tubes[1];
-	if (pipe(&ms->new_tubes[2]) == -1)
+	if (pipe(ms->new_tubes) == -1)
 		return (1);
 	ms->childs[child_index] = fork();
 	if (ms->childs[child_index] == -1)
@@ -47,7 +47,7 @@ int	do_forks(t_mini_shell *ms)
 			return (1);
 		if (first_fork(ms) == 1)
 			return (1);
-		while (child_index < ms->num_cmds - 2)
+		while (child_index <= ms->num_cmds - 2)
 		{
 			if (loop_fork(ms, child_index) == 1)
 				return (1);
@@ -64,6 +64,7 @@ int	do_forks(t_mini_shell *ms)
 	{
 		//do only one cmd w middle??
 		//lo siento, no hablo peruano
+		printf("esta entrando en el de un solo cmd\n");
 		return (0);
 	}
 }
