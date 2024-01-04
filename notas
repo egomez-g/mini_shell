@@ -5,6 +5,8 @@ falta:
 	-gestionar $?
 	-hacer los built-ins
 	-norminette kekw
+	-cuando lo pones sin espacio el or, lo pilla
+	-el infile puede ser pasado despues del comando sin el menor
 
 //probarlo sin el entorno, que no de seg folt se puede defender q no lo has comprobado
 //con echo se puede probar la minishell

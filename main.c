@@ -12,7 +12,7 @@ int	main(int argc, char **argv, char **envp)
 
 	argc = 0;
 	argv = NULL;
-	atexit(leaks);
+	//atexit(leaks);
 	while (1)
 	{
 		txt = readline("minishell>");
