@@ -10,8 +10,6 @@ void	close_parent(t_mini_shell *ms)
 		waitpid(ms->childs[i], NULL, 0);
 		++i;
 	}
-	//close(ms->fd_file_in);
-	//close(ms->fd_file_out);
 }
 
 void	pipex(t_mini_shell *ms)

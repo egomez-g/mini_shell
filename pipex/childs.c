@@ -12,7 +12,7 @@ void	exit_child(t_mini_shell *ms)
 	exit(1);
 }
 
-static int open_infiles(t_mini_shell *ms, int index)
+int open_infiles(t_mini_shell *ms, int index)
 {
 	int i;
 	int	fd;
@@ -31,7 +31,7 @@ static int open_infiles(t_mini_shell *ms, int index)
 	return(fd);	
 }
 
-static int open_outfiles(t_mini_shell *ms, int index)
+int open_outfiles(t_mini_shell *ms, int index)
 {
 	int i;
 	int	fd;
@@ -65,7 +65,11 @@ void	do_first_child(t_mini_shell *ms)
 	{
 		fd_in = open_infiles(ms, 0);
 		if (ms->cmds[0].here_doc == 1)
+		{
 			fd_in = ms->cmds[0].tuvo[0];
+			close(ms->cmds[0].tuvo[0]);
+			close(ms->cmds[0].tuvo[1]);
+		}
 		dup2(fd_in, 0);
 	}
 	if (ms->cmds[0].outfiles[0] != NULL)

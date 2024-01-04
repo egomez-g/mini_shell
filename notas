@@ -1,3 +1,10 @@
+falta:
+	-historial funcional
+	-las señales (ctrl c, ctrl d, ctrl -\)
+	-gestionar variables de entorno (modificar la profundidad de la shell)
+	-gestionar $?
+	-hacer los built-ins
+	-norminette kekw
 
 //probarlo sin el entorno, que no de seg folt se puede defender q no lo has comprobado
 //con echo se puede probar la minishell

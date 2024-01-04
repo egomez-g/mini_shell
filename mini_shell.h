@@ -59,25 +59,10 @@ char	*gnl_substr(char const *s, unsigned int str, size_t len);
 void	pipex(t_mini_shell *ms);
 
 int		do_forks(t_mini_shell *ms);
+int		open_outfiles(t_mini_shell *ms, int index);
+int		open_infiles(t_mini_shell *ms, int index);
 
 void	do_one_child(t_mini_shell *ms);
-
-
-/*typedef struct s_pipex
-{
-	char	**envp;
-	int		argc;
-	char	**argv;
-	int		new_tubes[2];
-	int		old_tubes[2];
-	int		fd_file_in;
-	int		fd_file_out;
-	int		here_doc;
-	char	*path;
-	char	**cmd;
-	int		*childs;
-	int		arg_i;
-}	t_pipex;*/
 
 int		ft_valid_name_char(int c);
 //rutes
@@ -89,6 +74,7 @@ char	**get_paths(t_mini_shell *ms);
 void	do_first_child(t_mini_shell *ms);
 void	do_middle_child(t_mini_shell *ms, int child_index);
 void	do_last_child(t_mini_shell *ms, int child_index);
+void	exit_child(t_mini_shell *ms);
 
 //forks
 #endif

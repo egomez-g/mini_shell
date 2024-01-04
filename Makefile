@@ -14,7 +14,8 @@ SRCS =	main.c						\
 		pipex/childs.c				\
 		pipex/forks.c				\
 		pipex/pipex.c				\
-		pipex/rutes.c
+		pipex/rutes.c				\
+		pipex/one_child.c
 
 		
 OBJS = $(SRCS:.c=.o)

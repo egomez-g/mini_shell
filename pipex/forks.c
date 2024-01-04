@@ -62,9 +62,11 @@ int	do_forks(t_mini_shell *ms)
 	}
 	else
 	{
-		//do only one cmd w middle??
-		//lo siento, no hablo peruano
-		printf("esta entrando en el de un solo cmd\n");
+		ms->childs[0] = fork();
+		if (ms->childs[0] == -1)
+			return (1);
+		if (ms->childs[0] == 0)
+			do_one_child(ms);
 		return (0);
 	}
 }
