@@ -66,7 +66,7 @@ void	find_cmd(char *txt, t_mini_shell *ms)
 			while (txt[i] != '\'')
 				txt++;
 		}
-		if (txt[i] == '|')
+		if (txt[i] == '|' || txt[i] == ';')
 		{
 			index++;
 			i++;

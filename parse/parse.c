@@ -69,7 +69,7 @@ static void	cmd_count(char *str, t_mini_shell *ms)
 		return (perror("Error"));
 	while (*str)
 	{
-		if (*str == '|')
+		if (*str == '|' || *str == ';')
 			ms->num_cmds++;
 		str++;
 	}

@@ -48,7 +48,7 @@ void	count_infiles(char *txt, t_mini_shell *ms)
 	index = 0;
 	while	(txt[i])
 	{
-		if (txt[i] == '|')
+		if (txt[i] == '|' || txt[i] == ';')
 		{
 			ms->cmds[index].infiles = (char **)malloc(sizeof(char *) * (count + 1));
 			if (!ms->cmds[index].infiles)
@@ -85,7 +85,7 @@ void	find_infile(char *txt, t_mini_shell *ms)
 	count_infiles(txt, ms);
 	while (*txt)
 	{
-		if (*txt == '|')
+		if (*txt == '|' || *txt == ';')
 		{
 			file_index = 0;
 			ms->cmds[index].here_doc = 0;

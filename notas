@@ -1,12 +1,14 @@
 falta:
-	-historial funcional
+	-hacer los built-ins (cd, pwd, export, unset)
 	-las señales (ctrl c, ctrl d, ctrl -\)
+
+	-gestionar el awk
 	-gestionar variables de entorno (modificar la profundidad de la shell)
 	-gestionar $?
-	-hacer los built-ins
-	-norminette kekw
-	-cuando lo pones sin espacio el or, lo pilla
 	-el infile puede ser pasado despues del comando sin el menor
+	-cuando lo pones sin espacio el or, lo pilla
+	-norminette kekw
+	-historial funcional??????? quiza revisar y preguntar solo quiza
 
 //probarlo sin el entorno, que no de seg folt se puede defender q no lo has comprobado
 //con echo se puede probar la minishell

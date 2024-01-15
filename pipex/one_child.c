@@ -17,6 +17,7 @@ void	do_one_child(t_mini_shell *ms)
 			close(ms->cmds[0].tuvo[1]);
 		}
 		dup2(fd_in, 0);
+		close(fd_in);
 	}
 	if (ms->cmds[0].outfiles[0] != NULL)
 	{

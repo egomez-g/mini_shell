@@ -31,7 +31,7 @@ void	count_outfiles(char *txt, t_mini_shell *ms)
 	index = 0;
 	while	(txt[i])
 	{
-		if (txt[i] == '|')
+		if (txt[i] == '|' || txt[i] == ';')
 		{
 			ms->cmds[index].outfiles = (char **)malloc(sizeof(char *) * (count + 1));
 			if (!ms->cmds[index].outfiles)
@@ -66,7 +66,7 @@ void	find_outfile(char *txt, t_mini_shell *ms)
 	count_outfiles(txt, ms);
 	while (*txt)
 	{
-		if (*txt == '|')
+		if (*txt == '|' || *txt == ';')
 		{
 			file_index = 0;
 			index++;

@@ -71,21 +71,19 @@ void	do_first_child(t_mini_shell *ms)
 			close(ms->cmds[0].tuvo[1]);
 		}
 		dup2(fd_in, 0);
+		close(fd_in);
 	}
 	if (ms->cmds[0].outfiles[0] != NULL)
 	{
 		fd_out = open_outfiles(ms, 0);
 		dup2(fd_out, 1);
+		close(fd_out);
 	}
 	else
 		dup2(ms->new_tubes[1], 1);
 
 	close(ms->new_tubes[0]);
 	close(ms->new_tubes[1]);
-	close(fd_in);
-	close(fd_out);
-	close(ms->cmds[0].tuvo[0]);
-	close(ms->cmds[0].tuvo[1]);
 
 	find_path(ms, 0);
 	execve(ms->cmds[0].path, ft_split(ms->cmds[0].cmd, ' '), ms->envp);

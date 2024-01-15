@@ -57,7 +57,6 @@ int	do_forks(t_mini_shell *ms)
 			return (1);
 		close(ms->new_tubes[0]);
 		close(ms->new_tubes[1]);
-		//ms->childs[ms->argc - 3] = -1;??????????????????
 		return (0);
 	}
 	else

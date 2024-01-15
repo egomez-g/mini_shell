@@ -37,6 +37,8 @@ typedef struct s_mini_shell
 	pid_t	*childs;
 }t_mini_shell;
 
+void	find_lines(char *txt, char **envp);
+
 void	parse(char* txt, char **envp);
 
 void	find_infile(char *txt, t_mini_shell *ms);
