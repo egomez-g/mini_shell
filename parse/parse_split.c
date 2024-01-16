@@ -1,10 +1,9 @@
 
 #include "../mini_shell.h"
 
-
 static int	strchr(char *str, int c)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i] != '\0')
@@ -18,12 +17,12 @@ static int	strchr(char *str, int c)
 	return (-1);
 }
 
-void find_lines(char *txt, char **envp)
+void	find_lines(char *txt, char **envp)
 {
-	int start;
-	int end;
-	char *str;
-	pid_t			child;
+	int		start;
+	int		end;
+	char	*str;
+	pid_t	child;
 
 	start = 0;
 	end = 0;

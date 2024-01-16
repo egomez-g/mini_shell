@@ -29,7 +29,7 @@ void	count_outfiles(char *txt, t_mini_shell *ms)
 	count = 0;
 	i = 0;
 	index = 0;
-	while	(txt[i])
+	while (txt[i])
 	{
 		if (txt[i] == '|' || txt[i] == ';')
 		{

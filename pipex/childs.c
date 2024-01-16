@@ -67,10 +67,12 @@ void	do_first_child(t_mini_shell *ms)
 		if (ms->cmds[0].here_doc == 1)
 		{
 			fd_in = ms->cmds[0].tuvo[0];
+			dup2(fd_in, 0);
 			close(ms->cmds[0].tuvo[0]);
 			close(ms->cmds[0].tuvo[1]);
 		}
-		dup2(fd_in, 0);
+		else
+			dup2(fd_in, 0);
 		close(fd_in);
 	}
 	if (ms->cmds[0].outfiles[0] != NULL)
@@ -101,10 +103,12 @@ void	do_middle_child(t_mini_shell *ms, int child_index)
 		if (ms->cmds[child_index].here_doc == 1)
 		{
 			fd_in = ms->cmds[child_index].tuvo[0];
+			dup2(fd_in, 0);
 			close(ms->cmds[child_index].tuvo[0]);
 			close(ms->cmds[child_index].tuvo[1]);
 		}
-		dup2(fd_in, 0);
+		else
+			dup2(fd_in, 0);
 		close(fd_in);
 	}
 	else
@@ -132,18 +136,18 @@ void	do_last_child(t_mini_shell *ms, int child_index)
 	int	fd_in = 0;
 	int	fd_out = 0;
 
-	printf("HEREDOC %d\n", ms->cmds[child_index].here_doc);
-	printf("INFILE%s\n", ms->cmds[child_index].infiles[0]);
 	if (ms->cmds[child_index].infiles[0] != NULL || ms->cmds[child_index].here_doc == 1)
 	{
 		fd_in = open_infiles(ms, child_index);
 		if (ms->cmds[child_index].here_doc == 1)
 		{
 			fd_in = ms->cmds[child_index].tuvo[0];
+			dup2(fd_in, 0);
 			close(ms->cmds[child_index].tuvo[0]);
 			close(ms->cmds[child_index].tuvo[1]);
 		}
-		dup2(fd_in, 0);
+		else
+			dup2(fd_in, 0);
 		close(fd_in);
 	}
 	else

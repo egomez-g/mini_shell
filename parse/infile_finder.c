@@ -46,7 +46,7 @@ void	count_infiles(char *txt, t_mini_shell *ms)
 	count = 0;
 	i = 0;
 	index = 0;
-	while	(txt[i])
+	while (txt[i])
 	{
 		if (txt[i] == '|' || txt[i] == ';')
 		{
@@ -125,7 +125,4 @@ void	find_infile(char *txt, t_mini_shell *ms)
 }
 
 //con heredoc lo haces siempre pero no lo usas si luego hay otro infile
-
-
 //hacer el heredoc aqui o en el pipex
-

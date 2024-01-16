@@ -1,10 +1,10 @@
 #include "../mini_shell.h"
 
-
 int	ft_valid_name_char(int c)
 {
-	if (c != '!' && c != '?' && c != '<' && c != '>' && \
-	c != '(' && c != ')' &&c != '&' && c <=126 && c >= 33)
+	if ((c != '!' && c != '?' && c != '<' && c != '>' && \
+	c != '(' && c != ')' &&c != '&' && c <= 126 && c >= 33) || \
+	c == -61 || c == -111 || c == -79)
 		return (1);
 	else
 		return (0);
@@ -15,7 +15,7 @@ static void	quote_count(char *txt)
 	int	single_quote;
 
 	single_quote = 0;
-	while(*txt)
+	while (*txt)
 	{
 		if (*txt == '\'' || *txt == '\"')
 			single_quote++;
@@ -31,6 +31,7 @@ static void	quote_count(char *txt)
 static void	fill_struct(char *txt, t_mini_shell *ms)
 {
 	int	i;
+	int	j;
 
 	quote_count(txt);
 	find_infile(txt, ms);
@@ -40,7 +41,7 @@ static void	fill_struct(char *txt, t_mini_shell *ms)
 	while (i < ms->num_cmds)
 	{
 		printf("CMD: %s\n", ms->cmds[i].cmd);
-		int j = 0;
+		j = 0;
 		while (ms->cmds[i].infiles[j])
 		{
 			printf("INFILE: %s\n", ms->cmds[i].infiles[j]);
@@ -55,12 +56,11 @@ static void	fill_struct(char *txt, t_mini_shell *ms)
 		printf("______________________________\n\n");
 		i++;
 	}
-
-	//wc Makefile
-	//      46      94     729 Makefile
-	//wc<Makefile
-	//      46      94     729
 }
+//wc Makefile
+//	46	94	729 Makefile
+//wc<Makefile
+//	46	94	729
 
 static void	cmd_count(char *str, t_mini_shell *ms)
 {
@@ -75,9 +75,9 @@ static void	cmd_count(char *str, t_mini_shell *ms)
 	}
 }
 
-void	parse(char* txt, char **envp)
+void	parse(char *txt, char **envp)
 {
-	t_mini_shell ms;
+	t_mini_shell	ms;
 
 	ms.envp = envp;
 	cmd_count(txt, &ms);
@@ -85,7 +85,6 @@ void	parse(char* txt, char **envp)
 	if (!ms.cmds)
 		return ;
 	fill_struct(txt, &ms);
-
 	pipex(&ms);
 	exit (0);
 }
