@@ -17,7 +17,7 @@ static int	strchr(char *str, int c)
 	return (-1);
 }
 
-void	find_lines(char *txt, char **envp)
+void	find_lines(char *txt, t_mini_shell *ms)
 {
 	int		start;
 	int		end;
@@ -31,14 +31,21 @@ void	find_lines(char *txt, char **envp)
 		end = strchr(txt + start, ';');
 		str = gnl_substr(txt, start, end);
 		start += end + 1;
-		child = fork();
-		if (child == 0)
-			parse(str, envp);
+
+		if (do_builtins(str, ms) == -1)
+		{
+			child = fork();
+			if (child == 0)
+				parse(str, ms);
+		}
 		free(str);
 		waitpid(child, NULL, 0);
 	}
-	child = fork();
-	if (child == 0)
-		parse(txt + start, envp);
-	waitpid(child, NULL, 0);
+	if (do_builtins(txt + start, ms) == -1)
+	{
+		child = fork();
+		if (child == 0)
+			parse(txt + start, ms);
+		waitpid(child, NULL, 0);
+	}
 }

@@ -27,7 +27,6 @@ void	do_one_child(t_mini_shell *ms)
 		dup2(fd_out, 1);
 		close(fd_out);
 	}
-	printf("%d\n", fd_in);
 	find_path(ms, 0);
 	execve(ms->cmds[0].path, ft_split(ms->cmds[0].cmd, ' '), ms->envp);
 	exit_child(ms);

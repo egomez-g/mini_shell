@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sgil-moy <sgil-moy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/12 11:00:56 by sgil-moy          #+#    #+#             */
-/*   Updated: 2024/01/16 14:09:06 by sgil-moy         ###   ########.fr       */
+/*   Created: 2023/09/12 11:06:15 by sgil-moy          #+#    #+#             */
+/*   Updated: 2024/01/16 13:53:11 by sgil-moy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char	*ft_strrchr( const char *str, int c)
-{
-	char	*p;
+#include <stdio.h>
 
-	p = (char *)str;
-	while (*p != '\0')
-		++p;
-	while (p != str)
-	{
-		if (*p == (char)c)
-			return (p);
-		--p;
-	}
-	if (*p == (char)c)
-		return (p);
-	return (0);
+int	ft_strcmp(const char *str1, const char *str2)
+{
+	size_t	i;
+
+	i = 0;
+	while (str1[i] == str2[i] && str1[i] != '\0' && str2[i] != '\0')
+		++i;
+	return ((unsigned char)str1[i] - (unsigned char)str2[i]);
 }

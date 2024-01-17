@@ -6,7 +6,7 @@
 /*   By: sgil-moy <sgil-moy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 10:13:50 by sgil-moy          #+#    #+#             */
-/*   Updated: 2023/12/29 12:47:48 by sgil-moy         ###   ########.fr       */
+/*   Updated: 2024/01/16 14:33:54 by sgil-moy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ char	*ft_strchr(const char *str, int c);
 size_t	ft_strlcat(char *dest, const char *src, size_t size);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 size_t	ft_strlen(const char *str);
+int		ft_strcmp(const char *str1, const char *str2);
 int		ft_strncmp(const char *str1, const char *str2, size_t count);
 char	*ft_strnstr(const char *src, const char *fnd, size_t len);
 char	*ft_strrchr(const char *str, int c);

@@ -16,7 +16,13 @@ SRCS =	main.c						\
 		pipex/forks.c				\
 		pipex/pipex.c				\
 		pipex/rutes.c				\
-		pipex/one_child.c
+		pipex/one_child.c			\
+		built-ins/cd.c				\
+		built-ins/pwd.c				\
+		built-ins/builtins.c		\
+		built-ins/envp.c			\
+		built-ins/export.c			\
+		built-ins/unset.c			\
 
 		
 OBJS = $(SRCS:.c=.o)

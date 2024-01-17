@@ -37,9 +37,9 @@ typedef struct s_mini_shell
 	pid_t	*childs;
 }t_mini_shell;
 
-void	find_lines(char *txt, char **envp);
+void	find_lines(char *txt, t_mini_shell *ms);
 
-void	parse(char* txt, char **envp);
+void	parse(char* txt, t_mini_shell *ms);
 
 void	find_infile(char *txt, t_mini_shell *ms);
 
@@ -55,9 +55,19 @@ size_t	gnl_strlen(const char *str);
 int		ft_find_line(char *buff);
 char	*gnl_strjoin(char *s1, char const *s2);
 char	*gnl_substr(char const *s, unsigned int str, size_t len);
+void	free_strs(char **strs);
 
+//BUILTINS
 
-///////////////////////////////////////////POLLACULO///////////////////////////////////////////
+int	do_builtins(char *txt, t_mini_shell *ms);
+
+void	do_cd(char *txt, t_mini_shell *ms);
+void	do_pwd();
+void	do_envp(t_mini_shell *ms);
+void	do_export(char *txt, t_mini_shell *ms);
+void	do_unset(char *txt, t_mini_shell *ms);
+
+//////////////////////////////////////////////////////////////////////////////////////
 void	pipex(t_mini_shell *ms);
 
 int		do_forks(t_mini_shell *ms);

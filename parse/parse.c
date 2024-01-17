@@ -75,17 +75,17 @@ static void	cmd_count(char *str, t_mini_shell *ms)
 	}
 }
 
-void	parse(char *txt, char **envp)
+void	parse(char *txt, t_mini_shell *ms)
 {
-	t_mini_shell	ms;
-
-	ms.envp = envp;
-	cmd_count(txt, &ms);
-	ms.cmds = malloc (sizeof(t_cmds) * ms.num_cmds);
-	if (!ms.cmds)
+	cmd_count(txt, ms);
+	ms->cmds = malloc (sizeof(t_cmds) * ms->num_cmds);
+	if (!ms->cmds)
 		return ;
-	fill_struct(txt, &ms);
-	pipex(&ms);
+	fill_struct(txt, ms);
+	if (!ft_strncmp(txt, "cd", 2) && ms->num_cmds < 2)
+		exit(0);
+	pipex(ms);
+	printf("exit2\n");
 	exit (0);
 }
 //checkea el heredoc para los tuboss
