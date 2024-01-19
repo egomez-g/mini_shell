@@ -1,4 +1,3 @@
-
 #include "../mini_shell.h"
 
 static int	strchr(char *str, int c)
@@ -31,7 +30,6 @@ void	find_lines(char *txt, t_mini_shell *ms)
 		end = strchr(txt + start, ';');
 		str = gnl_substr(txt, start, end);
 		start += end + 1;
-
 		if (do_builtins(str, ms) == -1)
 		{
 			child = fork();
@@ -39,13 +37,13 @@ void	find_lines(char *txt, t_mini_shell *ms)
 				parse(str, ms);
 		}
 		free(str);
-		waitpid(child, NULL, 0);
+		waitpid(child, &ms->status, 0);
 	}
 	if (do_builtins(txt + start, ms) == -1)
 	{
 		child = fork();
 		if (child == 0)
 			parse(txt + start, ms);
-		waitpid(child, NULL, 0);
+		waitpid(child, &(ms->status), 0);
 	}
 }

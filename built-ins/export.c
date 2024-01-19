@@ -1,8 +1,8 @@
 #include "../mini_shell.h"
 
-static void add_vars(char ***new_envp, int len, char **txt)
+static void	add_vars(char ***new_envp, int len, char **txt)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (txt[i])
@@ -17,15 +17,15 @@ static void add_vars(char ***new_envp, int len, char **txt)
 	(*new_envp)[len] = NULL;
 }
 
-static	char** malloc_vars(int count, char **txt, t_mini_shell *ms)
+static char	**malloc_vars(int count, char **txt, t_mini_shell *ms)
 {
-	int	len;
-	char **new_envp;
+	int		len;
+	char	**new_envp;
 
 	len = 0;
-	while(ms->envp[len])
+	while (ms->envp[len])
 		len++;
-	new_envp = (char**)malloc(sizeof(char*) * (len + count + 1));
+	new_envp = (char **)malloc(sizeof(char *) * (len + count + 1));
 	if (!new_envp)
 		return (NULL);
 	len = 0;

@@ -12,7 +12,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-# define BUFFER_SIZE 43
+# define BUFFER_SIZE 777
 
 typedef struct s_cmds
 {
@@ -35,18 +35,16 @@ typedef struct s_mini_shell
 	t_cmds	*cmds;
 	int		num_cmds;
 	pid_t	*childs;
+	int		status;
 }t_mini_shell;
 
+
+
 void	find_lines(char *txt, t_mini_shell *ms);
-
 void	parse(char* txt, t_mini_shell *ms);
-
 void	find_infile(char *txt, t_mini_shell *ms);
-
 void	find_outfile(char *txt, t_mini_shell *ms);
-
 void	find_cmd(char *txt, t_mini_shell *ms);
-
 void	heredoc(char *limitador, t_mini_shell *ms, int index);
 
 
@@ -56,37 +54,39 @@ int		ft_find_line(char *buff);
 char	*gnl_strjoin(char *s1, char const *s2);
 char	*gnl_substr(char const *s, unsigned int str, size_t len);
 void	free_strs(char **strs);
+void	skip_spaces(char *txt, int *i);
 
-//BUILTINS
-
-int	do_builtins(char *txt, t_mini_shell *ms);
+///////////////////////////////////BUILTINS///////////////////////////////////
+int		do_builtins(char *txt, t_mini_shell *ms);
 
 void	do_cd(char *txt, t_mini_shell *ms);
-void	do_pwd();
+void	do_pwd(void);
 void	do_envp(t_mini_shell *ms);
 void	do_export(char *txt, t_mini_shell *ms);
 void	do_unset(char *txt, t_mini_shell *ms);
+void	do_echo(char *txt, t_mini_shell *ms);
+void	do_exit(char *txt, t_mini_shell *ms);
 
-//////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////PIPEX///////////////////////////////////
 void	pipex(t_mini_shell *ms);
 
 int		do_forks(t_mini_shell *ms);
 int		open_outfiles(t_mini_shell *ms, int index);
 int		open_infiles(t_mini_shell *ms, int index);
 
-void	do_one_child(t_mini_shell *ms);
-
-int		ft_valid_name_char(int c);
 //rutes
 void	find_path(t_mini_shell *ms, int cmd_index);
-
 char	**get_paths(t_mini_shell *ms);
 
 //childs
+void	do_one_child(t_mini_shell *ms);
 void	do_first_child(t_mini_shell *ms);
 void	do_middle_child(t_mini_shell *ms, int child_index);
 void	do_last_child(t_mini_shell *ms, int child_index);
 void	exit_child(t_mini_shell *ms);
 
+void	manage_fd_in(int *fd_in, t_mini_shell *ms, int child_index);
+
+int		ft_valid_name_char(int c);
 //forks
 #endif

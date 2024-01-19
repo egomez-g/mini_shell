@@ -39,8 +39,8 @@ int	check_rute(char *rute, t_mini_shell *ms, int cmd_i)
 	char	*aux;
 	char	*cmd;
 	char	**split_cmd;
-	
-	split_cmd = ft_split(ms->cmds[cmd_i].cmd, ' ');//free¿?
+
+	split_cmd = ft_split(ms->cmds[cmd_i].cmd, ' ');
 	aux = ft_strjoin(rute, "/");
 	cmd = ft_strjoin(aux, split_cmd[0]);
 	free(aux);
@@ -52,6 +52,7 @@ int	check_rute(char *rute, t_mini_shell *ms, int cmd_i)
 	free(cmd);
 	return (1);
 }
+//free¿?
 
 void	find_path(t_mini_shell *ms, int cmd_i)
 {
@@ -64,7 +65,7 @@ void	find_path(t_mini_shell *ms, int cmd_i)
 	if (!rutes)
 	{
 		ms->cmds[cmd_i].path = cmd[0];
-		return;
+		return ;
 	}
 	i = 0;
 	while (rutes[i])

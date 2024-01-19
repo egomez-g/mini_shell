@@ -3,27 +3,31 @@
 static int	is_not_deleted(char *line, char **txt)
 {
 	int	i;
+	int	len;
 
 	i = 0;
-	while(txt[i])
+	while (txt[i])
 	{
-		if (ft_strcmp(line, txt[i]) == 0 && \
-				ft_strcmp(line, "_=") != 0)
+		len = ft_strchr(line, '=') - line;
+		if (ft_strncmp(txt[i], line, len) == 0 && \
+				ft_strlen(txt[i]) == (size_t)len && \
+				ft_strncmp(txt[i], "_", 1) != 0)
 			return (0);
 		i++;
 	}
 	return (1);
 }
-static	char** malloc_vars(int count, char **txt, t_mini_shell *ms)
+
+static char	**malloc_vars(int count, char **txt, t_mini_shell *ms)
 {
-	int	i;
-	int	j;
-	char **new_envp;
+	int		i;
+	int		j;
+	char	**new_envp;
 
 	i = 0;
-	while(ms->envp[i])
+	while (ms->envp[i])
 		i++;
-	new_envp = (char**)malloc(sizeof(char*) * (i - count + 1));
+	new_envp = (char **)malloc(sizeof(char *) * (i - count + 1));
 	if (!new_envp)
 		return (NULL);
 	i = 0;
@@ -48,8 +52,9 @@ void	do_unset(char *txt, t_mini_shell *ms)
 	int		i;
 	int		j;
 	int		count;
+	int		len;
 
-	i = 0;
+	i = 1;
 	count = 0;
 	var_env = ft_split(txt, ' ');
 	while (var_env[i])
@@ -57,8 +62,10 @@ void	do_unset(char *txt, t_mini_shell *ms)
 		j = 0;
 		while (ms->envp[j])
 		{
-			if (ft_strcmp(var_env[i], ms->envp[j]) == 0 && \
-				ft_strcmp(var_env[i], "_=") != 0)
+			len = ft_strchr(ms->envp[j], '=') - ms->envp[j];
+			if (ft_strncmp(var_env[i], ms->envp[j], len) == 0 && \
+				ft_strlen(var_env[i]) == (size_t)len && \
+				ft_strncmp(var_env[i], "_", 1) != 0)
 				count++;
 			j++;
 		}

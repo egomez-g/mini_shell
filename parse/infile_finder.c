@@ -2,9 +2,9 @@
 
 static char	*get_infile(char *txt)
 {
-	int	i;
-	int	end;
-	char *infile;
+	int		i;
+	int		end;
+	char	*infile;
 
 	i = 0;
 	end = 0;
@@ -19,6 +19,7 @@ static char	*get_infile(char *txt)
 		infile = NULL;
 	return (infile);
 }
+
 static char	*get_limit(char *txt)
 {
 	int	i;
@@ -32,16 +33,16 @@ static char	*get_limit(char *txt)
 	while (txt[i + end] && ft_valid_name_char(txt[i + end]) == 1)
 		end++;
 	if (end > 0)
-		return(ft_substr(txt, i, i + end - 1));
+		return (ft_substr(txt, i, i + end - 1));
 	else
-		return(ft_substr(txt, 0, 0));
+		return (ft_substr(txt, 0, 0));
 }
 
 void	count_infiles(char *txt, t_mini_shell *ms)
 {
 	int	i;
 	int	index;
-	int count;
+	int	count;
 
 	count = 0;
 	i = 0;
@@ -50,7 +51,8 @@ void	count_infiles(char *txt, t_mini_shell *ms)
 	{
 		if (txt[i] == '|' || txt[i] == ';')
 		{
-			ms->cmds[index].infiles = (char **)malloc(sizeof(char *) * (count + 1));
+			ms->cmds[index].infiles = (char **)malloc(sizeof(char *) * \
+			(count + 1));
 			if (!ms->cmds[index].infiles)
 				return ;
 			ms->cmds[index].infiles[count] = NULL;
@@ -75,8 +77,8 @@ void	count_infiles(char *txt, t_mini_shell *ms)
 void	find_infile(char *txt, t_mini_shell *ms)
 {
 	char	*limitador;
-	int index;
-	int	file_index;
+	int		index;
+	int		file_index;
 
 	index = 0;
 	file_index = 0;

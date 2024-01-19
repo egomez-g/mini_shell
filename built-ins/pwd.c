@@ -1,6 +1,6 @@
 #include "../mini_shell.h"
 
-void do_pwd()
+void	do_pwd(void)
 {
 	char	*rute;
 

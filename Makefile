@@ -13,6 +13,7 @@ SRCS =	main.c						\
 		parse/here_doc/gnl_utils.c	\
 		parse/parse_split.c 		\
 		pipex/childs.c				\
+		pipex/childs_aux.c			\
 		pipex/forks.c				\
 		pipex/pipex.c				\
 		pipex/rutes.c				\
@@ -23,6 +24,8 @@ SRCS =	main.c						\
 		built-ins/envp.c			\
 		built-ins/export.c			\
 		built-ins/unset.c			\
+		built-ins/echo.c			\
+		built-ins/exit.c			\
 
 		
 OBJS = $(SRCS:.c=.o)

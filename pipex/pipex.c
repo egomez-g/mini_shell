@@ -7,22 +7,21 @@ void	close_parent(t_mini_shell *ms)
 	i = 0;
 	while (ms->childs[i] != -1)
 	{
-		waitpid(ms->childs[i], NULL, 0);
+		waitpid(ms->childs[i], &(ms->status), 0);
 		++i;
 	}
 }
 
 void	pipex(t_mini_shell *ms)
 {
-	ms->childs = malloc(sizeof(pid_t *) * ms->num_cmds);
+	ms->childs = malloc(sizeof(pid_t *) * ms->num_cmds + 1);
+	ms->childs[ms->num_cmds] = -1;
 	if (ms->childs == NULL)
 		exit (1);
 	if (do_forks(ms) == 1)
 		exit(1);
-
 	close (ms->new_tubes[0]);
 	close_parent(ms);
-
 	free(ms->childs);
-	exit(0);
+	exit(WEXITSTATUS(ms->status));
 }

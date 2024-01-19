@@ -1,6 +1,6 @@
 #include "../mini_shell.h"
 
-int	first_fork(t_mini_shell *ms)
+static int	first_fork(t_mini_shell *ms)
 {
 	ms->childs[0] = fork();
 	if (ms->childs[0] == -1)
@@ -10,7 +10,7 @@ int	first_fork(t_mini_shell *ms)
 	return (0);
 }
 
-int	loop_fork(t_mini_shell *ms, int child_index)
+static int	loop_fork(t_mini_shell *ms, int child_index)
 {
 	ms->old_tubes[0] = ms->new_tubes[0];
 	ms->old_tubes[1] = ms->new_tubes[1];
@@ -26,13 +26,23 @@ int	loop_fork(t_mini_shell *ms, int child_index)
 	return (0);
 }
 
-int	last_fork(t_mini_shell *ms, int child_index)
+static int	last_fork(t_mini_shell *ms, int child_index)
 {
 	ms->childs[child_index] = fork();
 	if (ms->childs[child_index] == -1)
 		return (1);
 	if (ms->childs[child_index] == 0)
 		do_last_child(ms, child_index);
+	return (0);
+}
+
+static int	one_fork(t_mini_shell *ms)
+{
+	ms->childs[0] = fork();
+	if (ms->childs[0] == -1)
+		return (1);
+	if (ms->childs[0] == 0)
+		do_one_child(ms);
 	return (0);
 }
 
@@ -60,12 +70,5 @@ int	do_forks(t_mini_shell *ms)
 		return (0);
 	}
 	else
-	{
-		ms->childs[0] = fork();
-		if (ms->childs[0] == -1)
-			return (1);
-		if (ms->childs[0] == 0)
-			do_one_child(ms);
-		return (0);
-	}
+		return (one_fork(ms));
 }

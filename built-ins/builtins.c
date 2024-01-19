@@ -1,8 +1,8 @@
 #include "../mini_shell.h"
 
-int do_builtins(char *txt, t_mini_shell *ms)
+int	do_builtins(char *txt, t_mini_shell *ms)
 {
-	char **str;
+	char	**str;
 
 	str = NULL;
 	if (ft_strchr(txt, '|'))
@@ -18,6 +18,10 @@ int do_builtins(char *txt, t_mini_shell *ms)
 		return (free_strs(str), do_export(txt, ms), 0);
 	else if (!(ft_strcmp(str[0], "unset")))
 		return (free_strs(str), do_unset(txt, ms), 0);
+	else if (!(ft_strcmp(str[0], "echo")))
+		return (free_strs(str), do_echo(txt, ms), 0);
+	else if (!(ft_strcmp(str[0], "exit")))
+		return (free_strs(str), do_exit(txt, ms), 0);
 	free_strs(str);
 	return (-1);
 }

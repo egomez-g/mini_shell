@@ -1,4 +1,18 @@
-#include"../mini_shell.h"
+#include "../mini_shell.h"
+
+static void	reset_pwd(char **var, char *new_pwd, char *old_pwd)
+{
+	if (ft_strncmp(*var, "PWD=", 4) == 0)
+	{
+		free(*var);
+		*var = ft_strjoin("PWD=", new_pwd);
+	}
+	if (ft_strncmp(*var, "OLDPWD=", 7) == 0)
+	{
+		free(*var);
+		*var = ft_strjoin("OLDPWD=", old_pwd);
+	}
+}
 
 static void	change_pwd(t_mini_shell *ms, char *new_pwd)
 {
@@ -18,24 +32,13 @@ static void	change_pwd(t_mini_shell *ms, char *new_pwd)
 			}
 		}
 		else
-		{
-			if (ft_strncmp(ms->envp[i], "PWD=", 4) == 0)
-			{
-				free(ms->envp[i]);
-				ms->envp[i] = ft_strjoin("PWD=", new_pwd);
-			}
-			if (ft_strncmp(ms->envp[i], "OLDPWD=", 7) == 0)
-			{
-				free(ms->envp[i]);
-				ms->envp[i] = ft_strjoin("OLDPWD=", old_pwd);
-			}
-		}
+			reset_pwd(&ms->envp[i], new_pwd, old_pwd);
 		++i;
 	}
 	free (old_pwd);
 }
 
-char	*get_home(char** envp)
+char	*get_home(char **envp)
 {
 	int		i;
 	char	*home;
@@ -55,7 +58,7 @@ static char	*chdir_rute(char *rute)
 {
 	char	**steps1;
 	char	*sol;
-	
+
 	steps1 = ft_split(rute, ' ');
 	if (!steps1[1])
 	{

@@ -3,7 +3,7 @@
 int	ft_valid_name_char(int c)
 {
 	if ((c != '!' && c != '?' && c != '<' && c != '>' && \
-	c != '(' && c != ')' &&c != '&' && c <= 126 && c >= 33) || \
+	c != '(' && c != ')' && c != '&' && c <= 126 && c >= 33) || \
 	c == -61 || c == -111 || c == -79)
 		return (1);
 	else
@@ -82,10 +82,9 @@ void	parse(char *txt, t_mini_shell *ms)
 	if (!ms->cmds)
 		return ;
 	fill_struct(txt, ms);
-	if (!ft_strncmp(txt, "cd", 2) && ms->num_cmds < 2)
-		exit(0);
+	//if (!ft_strncmp(txt, "cd", 2) && ms->num_cmds < 2)
+	//	exit(0);
 	pipex(ms);
-	printf("exit2\n");
-	exit (0);
+	exit (ms->status);
 }
 //checkea el heredoc para los tuboss

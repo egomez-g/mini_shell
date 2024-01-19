@@ -2,9 +2,9 @@
 
 static char	*get_outfile(char *txt)
 {
-	int	i;
-	int	end;
-	char *outfile;
+	int		i;
+	int		end;
+	char	*outfile;
 
 	i = 0;
 	end = 0;
@@ -24,7 +24,7 @@ void	count_outfiles(char *txt, t_mini_shell *ms)
 {
 	int	i;
 	int	index;
-	int count;
+	int	count;
 
 	count = 0;
 	i = 0;
@@ -33,7 +33,8 @@ void	count_outfiles(char *txt, t_mini_shell *ms)
 	{
 		if (txt[i] == '|' || txt[i] == ';')
 		{
-			ms->cmds[index].outfiles = (char **)malloc(sizeof(char *) * (count + 1));
+			ms->cmds[index].outfiles = (char **)malloc(sizeof(char *) * \
+			(count + 1));
 			if (!ms->cmds[index].outfiles)
 				return ;
 			ms->cmds[index].outfiles[count] = NULL;

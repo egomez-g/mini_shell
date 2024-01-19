@@ -1,21 +1,13 @@
 #falta:
-#	-hacer los built-ins (echo, unset, exit?????)
 #	-las señales (ctrl c, ctrl d, ctrl -\)
-#??????
-#espacios con ; y sin el
-#	-shlvl
+
 #	-gestionar el awk
-#	-gestionar variables de entorno (modificar la profundidad de la shell)
-#	-gestionar $?
-#	-el infile puede ser pasado despues del comando sin el menor
-#	-cuando lo pones sin espacio el or, lo pilla
+#	-parseo del echo kekw
 #	-norminette kekw
-#	-historial funcional??????? quiza revisar y preguntar solo quiza
-#
+#	-ls >/dev/stdout | cd ..
+
 #//probarlo sin el entorno, que no de seg folt se puede defender q no lo has comprobado
-#//con echo se puede probar la minishell
-#
-#PWD = /Users/sgil-moy
-#SHLVL = 1
-#_ = /usr/bin/env
-#hacer cosas con el =, en el export tambein y suerte xd tu problema
+
+#hacer cosas con el =, en el export tambien y suerte xd tu problema
+#checkear argv
+#heredoc?? esta rarete
