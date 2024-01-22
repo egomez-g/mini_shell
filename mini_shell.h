@@ -11,6 +11,7 @@
 # include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <signal.h>
 
 # define BUFFER_SIZE 777
 
@@ -29,24 +30,22 @@ typedef struct s_cmds
 
 typedef struct s_mini_shell
 {
-	char	**envp;
-	int		old_tubes[2];
-	int		new_tubes[2];
-	t_cmds	*cmds;
-	int		num_cmds;
-	pid_t	*childs;
-	int		status;
+	char				**envp;
+	int					old_tubes[2];
+	int					new_tubes[2];
+	t_cmds				*cmds;
+	int					num_cmds;
+	pid_t				*childs;
+	int					status;
+	struct sigaction	sig;
 }t_mini_shell;
 
-
-
 void	find_lines(char *txt, t_mini_shell *ms);
-void	parse(char* txt, t_mini_shell *ms);
+void	parse(char *txt, t_mini_shell *ms);
 void	find_infile(char *txt, t_mini_shell *ms);
 void	find_outfile(char *txt, t_mini_shell *ms);
 void	find_cmd(char *txt, t_mini_shell *ms);
 void	heredoc(char *limitador, t_mini_shell *ms, int index);
-
 
 char	*get_next_line(int fd);
 size_t	gnl_strlen(const char *str);
@@ -55,6 +54,8 @@ char	*gnl_strjoin(char *s1, char const *s2);
 char	*gnl_substr(char const *s, unsigned int str, size_t len);
 void	free_strs(char **strs);
 void	skip_spaces(char *txt, int *i);
+
+char	*remove_quotes(char *txt);
 
 ///////////////////////////////////BUILTINS///////////////////////////////////
 int		do_builtins(char *txt, t_mini_shell *ms);
@@ -68,6 +69,9 @@ void	do_echo(char *txt, t_mini_shell *ms);
 void	do_exit(char *txt, t_mini_shell *ms);
 
 ///////////////////////////////////PIPEX///////////////////////////////////
+void signals(int sig);
+///////////////////////////////////PIPEX///////////////////////////////////
+
 void	pipex(t_mini_shell *ms);
 
 int		do_forks(t_mini_shell *ms);

@@ -1,39 +1,37 @@
 #include "../mini_shell.h"
 
-static char	*get_infile(char *txt)
+static char	*get_infile(char *txt, int start)
 {
 	int		i;
 	int		end;
 	char	*infile;
 
-	i = 0;
+	i = start + 1;
 	end = 0;
-	i++;
 	while (txt[i] && (txt[i] == ' ' || (txt[i] <= 13 && *txt >= 9)))
 		i++;
 	while (txt[i + end] && ft_valid_name_char(txt[i + end]) == 1)
 		end++;
 	if (end > 0)
-		infile = ft_substr(txt, i, i + end - 1);
+		infile = ft_substr(txt, i, end);
 	else
 		infile = NULL;
 	return (infile);
 }
 
-static char	*get_limit(char *txt)
+static char	*get_limit(char *txt, int start)
 {
 	int	i;
 	int	end;
 
-	i = 0;
+	i = start + 1;
 	end = 0;
-	i++;
 	while (txt[i] && (txt[i] == ' ' || (txt[i] <= 13 && *txt >= 9)))
 		i++;
 	while (txt[i + end] && ft_valid_name_char(txt[i + end]) == 1)
 		end++;
 	if (end > 0)
-		return (ft_substr(txt, i, i + end - 1));
+		return (ft_substr(txt, i, end));
 	else
 		return (ft_substr(txt, 0, 0));
 }
@@ -77,54 +75,53 @@ void	count_infiles(char *txt, t_mini_shell *ms)
 void	find_infile(char *txt, t_mini_shell *ms)
 {
 	char	*limitador;
+	int		i;
 	int		index;
 	int		file_index;
 
+	i = 0;
 	index = 0;
 	file_index = 0;
 	ms->cmds[index].here_doc = 0;
 	ms->cmds[0].infiles = NULL;
 	count_infiles(txt, ms);
-	while (*txt)
+	while (txt[i])
 	{
-		if (*txt == '|' || *txt == ';')
+		if (txt[i] == '|' || txt[i] == ';')
 		{
 			file_index = 0;
 			ms->cmds[index].here_doc = 0;
 			index++;
 		}
-		if (*txt == '\"')
+		//if (txt[i] == '\"')
+		//{
+		//	i++;
+		//	while (txt[i] != '\"')
+		//		i++;
+		//}
+		//if (txt[i] == '\'')
+		//{
+		//	i++;
+		//	while (txt[i] != '\'')
+		//		i++;
+		//}
+		if (txt[i] == '<')
 		{
-			txt++;
-			while (*txt != '\"')
-				txt++;
-		}
-		if (*txt == '\'')
-		{
-			txt++;
-			while (*txt != '\'')
-				txt++;
-		}
-		if (*txt == '<')
-		{
-			if (*(txt + 1) == '<')
+			if (txt[i + 1] == '<')
 			{
-				txt++;
-				limitador = get_limit(txt);
+				i++;
+				limitador = get_limit(txt, i);
 				heredoc(limitador, ms, index);
 				free(limitador);
 				ms->cmds[index].here_doc = 1;
 			}
 			else
 			{
-				ms->cmds[index].infiles[file_index] = get_infile(txt);
+				ms->cmds[index].infiles[file_index] = get_infile(txt, i);
 				ms->cmds[index].here_doc = 0;
 				file_index++;
 			}
 		}
-		txt++;
+		i++;
 	}
 }
-
-//con heredoc lo haces siempre pero no lo usas si luego hay otro infile
-//hacer el heredoc aqui o en el pipex

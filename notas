@@ -1,13 +1,20 @@
 #falta:
 #	-las señales (ctrl c, ctrl d, ctrl -\)
-
 #	-gestionar el awk
-#	-parseo del echo kekw
 #	-norminette kekw
-#	-ls >/dev/stdout | cd ..
+#	-ls >/dev/stdout | cd .. //NO HACE EL SEGUNDO
 
 #//probarlo sin el entorno, que no de seg folt se puede defender q no lo has comprobado
 
+
+#las dobles comillas van dobladas no se como se parsea
+
+
+#____________donete____________
+#	heredoc?? esta rarete
+#	-parseo del echo kekw
+
+
+#________ya esta no?_________
 #hacer cosas con el =, en el export tambien y suerte xd tu problema
-#checkear argv
-#heredoc?? esta rarete
+#checkear argv ???

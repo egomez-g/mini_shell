@@ -12,36 +12,45 @@ int	ft_valid_name_char(int c)
 
 static void	quote_count(char *txt)
 {
+	int	i;
 	int	single_quote;
+	int	double_quote;
 
+	i = 0;
 	single_quote = 0;
-	while (*txt)
+	double_quote = 0;
+	while (txt[i])
 	{
-		if (*txt == '\'' || *txt == '\"')
+		if (txt[i] == '\"')
+			double_quote++;
+		else if (txt[i] == '\'')
 			single_quote++;
-		txt++;
+		i++;
 	}
-	if (single_quote % 2 != 0)
+	if (single_quote % 2 != 0 || double_quote % 2 != 0)
 	{
-		perror("Error");
+		perror("Error");//que se quede pillado o algo
 		exit (1);
 	}
 }
 
 static void	fill_struct(char *txt, t_mini_shell *ms)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
+	char	*new_txt;
 
 	quote_count(txt);
-	find_infile(txt, ms);
-	find_outfile(txt, ms);
-	find_cmd(txt, ms);
+	new_txt = remove_quotes(txt);
+	find_infile(new_txt, ms);
+	find_outfile(new_txt, ms);
+	find_cmd(new_txt, ms);
+	printf("IIIIINFILE: %s\n", ms->cmds[0].cmd);
 	i = 0;
 	while (i < ms->num_cmds)
 	{
-		printf("CMD: %s\n", ms->cmds[i].cmd);
 		j = 0;
+		printf("CMD: %s\n", ms->cmds[i].cmd);
 		while (ms->cmds[i].infiles[j])
 		{
 			printf("INFILE: %s\n", ms->cmds[i].infiles[j]);
@@ -57,10 +66,6 @@ static void	fill_struct(char *txt, t_mini_shell *ms)
 		i++;
 	}
 }
-//wc Makefile
-//	46	94	729 Makefile
-//wc<Makefile
-//	46	94	729
 
 static void	cmd_count(char *str, t_mini_shell *ms)
 {

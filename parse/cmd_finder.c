@@ -61,18 +61,18 @@ void	find_cmd(char *txt, t_mini_shell *ms)
 	i = 0;
 	while (txt[i])
 	{
-		if (txt[i] == '\"')
-		{
-			txt++;
-			while (txt[i] != '\"')
-				txt++;
-		}
-		if (txt[i] == '\'')
-		{
-			txt++;
-			while (txt[i] != '\'')
-				txt++;
-		}
+		//if (txt[i] == '\"')
+		//{
+		//	txt++;
+		//	while (txt[i] != '\"')
+		//		txt++;
+		//}
+		//if (txt[i] == '\'')
+		//{
+		//	txt++;
+		//	while (txt[i] != '\'')
+		//		txt++;
+		//}
 		if (txt[i] == '|' || txt[i] == ';')
 		{
 			index++;

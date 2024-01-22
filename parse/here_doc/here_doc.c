@@ -8,7 +8,8 @@ void	heredoc(char *limitador, t_mini_shell *ms, int index)
 	while (1)
 	{
 		buff = readline("here_doc>");
-		if (buff == NULL || !ft_strncmp(limitador, buff, ft_strlen(buff)))
+		if (buff == NULL || (!ft_strncmp(limitador, buff, ft_strlen(buff)) && \
+		!ft_strncmp(limitador, buff, ft_strlen(limitador))))
 			break ;
 		write(ms->cmds[index].tuvo[1], buff, ft_strlen(buff));
 		write(ms->cmds[index].tuvo[1], "\n", 1);

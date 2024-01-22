@@ -100,12 +100,11 @@ int	main(int argc, char **argv, char **envp)
 	argv = NULL;
 	copy_envp(envp, &ms);
 	ms.status = 0;
-	if (argc < 2)
+	if (argc > 1)
 	{
 		printf("minishell> Too many arguments\n");
 		exit(1);
 	}
-	//atexit(leaks);
 	while (1)
 	{
 		txt = readline("minishell>");
