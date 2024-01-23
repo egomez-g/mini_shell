@@ -56,6 +56,8 @@ void	free_strs(char **strs);
 void	skip_spaces(char *txt, int *i);
 
 char	*remove_quotes(char *txt);
+char	*expanad_variables(char *txt, t_mini_shell *ms);
+
 
 ///////////////////////////////////BUILTINS///////////////////////////////////
 int		do_builtins(char *txt, t_mini_shell *ms);

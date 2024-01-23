@@ -99,6 +99,7 @@ int	main(int argc, char **argv, char **envp)
 	argc = 0;
 	argv = NULL;
 	copy_envp(envp, &ms);
+	//atexit(leaks);
 	ms.status = 0;
 	if (argc > 1)
 	{

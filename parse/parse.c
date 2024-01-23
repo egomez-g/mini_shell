@@ -38,15 +38,17 @@ static void	fill_struct(char *txt, t_mini_shell *ms)
 {
 	int		i;
 	int		j;
-	char	*new_txt;
-
-	quote_count(txt);
-	new_txt = remove_quotes(txt);
-	find_infile(new_txt, ms);
-	find_outfile(new_txt, ms);
-	find_cmd(new_txt, ms);
-	printf("IIIIINFILE: %s\n", ms->cmds[0].cmd);
+	char	*newtxt;
+	//char	*new_txt;
 	i = 0;
+	quote_count(txt);
+
+	//new_txt = remove_quotes(txt);
+	newtxt = expanad_variables(txt, ms);
+
+	find_infile(newtxt, ms);
+	find_outfile(newtxt, ms);
+	find_cmd(newtxt, ms);
 	while (i < ms->num_cmds)
 	{
 		j = 0;
@@ -87,8 +89,6 @@ void	parse(char *txt, t_mini_shell *ms)
 	if (!ms->cmds)
 		return ;
 	fill_struct(txt, ms);
-	//if (!ft_strncmp(txt, "cd", 2) && ms->num_cmds < 2)
-	//	exit(0);
 	pipex(ms);
 	exit (ms->status);
 }

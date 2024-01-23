@@ -13,6 +13,7 @@ SRCS =	main.c						\
 		parse/here_doc/gnl_utils.c	\
 		parse/parse_split.c 		\
 		parse/quotes.c 				\
+		parse/variables.c 			\
 		pipex/childs.c				\
 		pipex/childs_aux.c			\
 		pipex/forks.c				\

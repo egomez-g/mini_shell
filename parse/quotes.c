@@ -1,11 +1,13 @@
 #include "../mini_shell.h"
 
+
+
 char	*remove_quotes(char *txt)
 {
 	int		i;
 	char	*new_txt;
 	char	**aux;
-	
+
 	i = 1;
 	aux = ft_split(txt, '\"');
 	new_txt = ft_strdup(aux[0]);

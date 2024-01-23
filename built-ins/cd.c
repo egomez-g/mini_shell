@@ -91,7 +91,6 @@ void	do_cd(char *txt, t_mini_shell *ms)
 	{
 		free (rute);
 		rute = getcwd(NULL, 0);
-		printf("RUTE1 = %s\n", rute);
 		change_pwd(ms, rute);
 	}
 	free (rute);

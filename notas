@@ -1,16 +1,41 @@
 #falta:
+
+#	las dobles comillas van dobladas no se como se parsea segfault
+
 #	-las señales (ctrl c, ctrl d, ctrl -\)
+
 #	-gestionar el awk
+
 #	-norminette kekw
+
 #	-ls >/dev/stdout | cd .. //NO HACE EL SEGUNDO
 
-#//probarlo sin el entorno, que no de seg folt se puede defender q no lo has comprobado
+#	//probarlo sin el entorno, que no de seg folt se puede defender q no lo has comprobado
 
 
-#las dobles comillas van dobladas no se como se parsea
+#COMILLAS
+#	[REDACTED]
+#	bash-3.2$ echo '"$PATH"'
+#	"$PATH"
+#	bash-3.2$ echo "'$PATH'"
+#	'/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki'
+#	bash-3.2$ echo '""'$PATH'"'"
+#	>
+
+#	"cd .."
+#	zsh: command not found: cd ..
+
+#SEÑALES
+# 	ctrl -\ == ctr + 4 hace esto: ^\Quit: 3 (cuando estas en bash) 
+#	Ctrl+4 sends ^\		->		^\ quits
+#	SIGINT kills the foreground process group and SIGQUIT kills it with a core dump
+
+
+
 
 
 #____________donete____________
+#	$$ no se gestiona devuelve el pid del proceso no se puede jeje god
 #	heredoc?? esta rarete
 #	-parseo del echo kekw
 

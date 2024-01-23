@@ -4,6 +4,7 @@ int	do_builtins(char *txt, t_mini_shell *ms)
 {
 	char	**str;
 
+	txt = expanad_variables(txt, ms);
 	str = NULL;
 	if (ft_strchr(txt, '|'))
 		return (-1);
