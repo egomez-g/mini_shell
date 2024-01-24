@@ -37,6 +37,7 @@ typedef struct s_mini_shell
 	int					num_cmds;
 	pid_t				*childs;
 	int					status;
+	int					quote;
 	struct sigaction	sig;
 }t_mini_shell;
 
@@ -55,7 +56,8 @@ char	*gnl_substr(char const *s, unsigned int str, size_t len);
 void	free_strs(char **strs);
 void	skip_spaces(char *txt, int *i);
 
-int		manage_quotes(char *txt);
+int		manage_quotes(char *txt, t_mini_shell *ms);
+char	*clean_quotes(char *txt, t_mini_shell *ms);
 char	*expanad_variables(char *txt, t_mini_shell *ms);
 
 

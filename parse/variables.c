@@ -54,7 +54,7 @@ char	*expanad_variables(char *txt, t_mini_shell *ms)
 	new_txt = txt;
 	while (txt[i])
 	{
-		if (txt[i] == '$' && !(txt[i + 1] && txt[i + 1] == '?'))
+		if (txt[i] == '$' && !(txt[i + 1] && txt[i + 1] == '?'))//esto esta raro creo????
 		{
 			end = 0;
 			while (txt[i + end] && !(txt[i + end] == ' ' || \

@@ -11,52 +11,18 @@
 
 #	-ls >/dev/stdout | cd .. //NO HACE EL SEGUNDO
 
-#	//probarlo sin el entorno, que no de seg folt se puede defender q no lo has comprobado
-
-
-#COMILLAS
-#	[REDACTED]
-#	bash-3.2$ echo '"$PATH"'
-#	"$PATH"
-#	bash-3.2$ echo "'$PATH'"
-#	'/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki'
-#	bash-3.2$ echo '""'$PATH'"'"
-#	>
-
-
 #	"cd .."
 #	zsh: command not found: cd ..
 
-
-#bash-3.2$ echo $PATHaç
-#�
-#bash-3.2$ echo $PATHa
-
-
+#	contar bien el numero de comandos
 
 #SEÑALES
 #	SIGINT kills the foreground process group and SIGQUIT kills it with a core dump
 
-
-
-
-
-#____________donete____________
-#	$$ no se gestiona devuelve el pid del proceso no se puede jeje god
-#	heredoc?? esta rarete
-#	-parseo del echo kekw
-
-
-#________ya esta no?_________
-#hacer cosas con el =, en el export tambien y suerte xd tu problema
-#checkear argv ???
-
 #bash-3.2$ ls > 1 | < 1 wc -l > 2
-#bash-3.2$ cat 2
-#       0
 
-#bash-3.2$ echo "$PATH"
-#/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/share/dotnet:/usr/local/munki:~/.dotnet/tools:/Library/Frameworks/Mono.framework/Versions/Current/Commands
+#echo $$ y echo $polla $culo ah y si el dollar no existe hay que quitarlo xd???
+
 #bash-3.2$ echo '$PATH'
 #$PATH
 #bash-3.2$ echo "\""

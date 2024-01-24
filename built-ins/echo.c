@@ -25,6 +25,8 @@ static void	skip_word(char *txt, int *i)
 
 static void	print_echo(char *txt, t_mini_shell *ms)
 {
+
+//echo $$ y echo $polla $culo ah y si el dollar no existe hay que quitarlo xd???
 	int	i;
 	int j;
 

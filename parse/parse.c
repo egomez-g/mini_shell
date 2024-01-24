@@ -43,7 +43,8 @@ static void	fill_struct(char *txt, t_mini_shell *ms)
 	i = 0;
 	quote_count(txt);
 	newtxt = expanad_variables(txt, ms);
-	//new_txt = manage_quotes(txt);
+	newtxt = clean_quotes(newtxt, ms);
+	printf("\nPOLLACULO: %s\n", newtxt);
 	find_infile(newtxt, ms);
 	find_outfile(newtxt, ms);
 	find_cmd(newtxt, ms);
