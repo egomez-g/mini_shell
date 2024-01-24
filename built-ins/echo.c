@@ -42,15 +42,10 @@ static void	print_echo(char *txt, t_mini_shell *ms)
 			skip_spaces(txt, &i);
 			i--;
 		}
-		else if (txt[i] == '$' && txt[i + 1] && txt[i + 1] == '?')///////////se maneja antes
+		else if (txt[i] == '$' && txt[i + 1] && txt[i + 1] == '?')//se maneja antes
 		{
 			printf("%d", WEXITSTATUS(ms->status));
 			i += 2;
-		}
-		else if (txt[i] == '$' && txt[i + 1] )///////////se maneja antes
-		{
-			skip_word(txt, &i);
-			skip_spaces(txt, &i);
 		}
 		else
 			printf("%c", txt[i]);
@@ -58,12 +53,23 @@ static void	print_echo(char *txt, t_mini_shell *ms)
 	}
 }
 
+static void skip_no_print(char *txt, int *i, int nl)
+{
+	skip_spaces(txt, i);
+	*i += 4;
+	skip_spaces(txt, i);
+	while (nl > 0)
+	{
+		skip_word(txt, i);
+		skip_spaces(txt, i);
+		nl--;
+	}
+}
 
 void	do_echo(char *txt, t_mini_shell *ms)
 {
 	int		i;
 	int		nl;
-	int		nl_bool;
 	char	**str;
 
 	str = ft_split(txt, ' ');
@@ -71,26 +77,15 @@ void	do_echo(char *txt, t_mini_shell *ms)
 		return ;
 	i = 1;
 	nl = 0;
-	nl_bool = 0;
 	while (str[i] && !check_nl(str[i]))
 	{
 		i++;
 		nl++;
 	}
-	if (nl > 0)
-		nl_bool = 1;
 	i = 0;
-	skip_spaces(txt, &i);
-	i += 4;
-	skip_spaces(txt, &i);
-	while (nl > 0)
-	{
-		skip_word(txt, &i);
-		skip_spaces(txt, &i);
-		nl--;
-	}
+	skip_no_print(txt, &i, nl);
 	print_echo(txt + i, ms);
-	if (!nl_bool)
+	if (nl == 0)
 		printf("\n");
 	free_strs(str);
 }

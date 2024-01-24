@@ -14,7 +14,7 @@ void	close_parent(t_mini_shell *ms)
 
 void	pipex(t_mini_shell *ms)
 {
-	ms->childs = malloc(sizeof(pid_t *) * ms->num_cmds + 1);
+	ms->childs = malloc(sizeof(pid_t *) * (ms->num_cmds + 1));
 	ms->childs[ms->num_cmds] = -1;
 	if (ms->childs == NULL)
 		exit (1);

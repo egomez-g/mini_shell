@@ -25,6 +25,9 @@ void	find_lines(char *txt, t_mini_shell *ms)
 
 	start = 0;
 	end = 0;
+	if (manage_quotes(txt) == 1)
+		return ;
+
 	while (strchr(txt + start, ';') != -1)
 	{
 		end = strchr(txt + start, ';');

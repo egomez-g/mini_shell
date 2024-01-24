@@ -39,13 +39,11 @@ static void	fill_struct(char *txt, t_mini_shell *ms)
 	int		i;
 	int		j;
 	char	*newtxt;
-	//char	*new_txt;
+
 	i = 0;
 	quote_count(txt);
-
-	//new_txt = remove_quotes(txt);
 	newtxt = expanad_variables(txt, ms);
-
+	//new_txt = manage_quotes(txt);
 	find_infile(newtxt, ms);
 	find_outfile(newtxt, ms);
 	find_cmd(newtxt, ms);
@@ -92,4 +90,3 @@ void	parse(char *txt, t_mini_shell *ms)
 	pipex(ms);
 	exit (ms->status);
 }
-//checkea el heredoc para los tuboss

@@ -2,9 +2,10 @@
 
 #	las dobles comillas van dobladas no se como se parsea segfault
 
-#	-las señales (ctrl c, ctrl d, ctrl -\)
-
 #	-gestionar el awk
+#cat del | awk '$2 == "Error!" {print $1}'
+
+#	-las señales (ctrl c, ctrl d, ctrl -\)
 
 #	-norminette kekw
 
@@ -22,12 +23,18 @@
 #	bash-3.2$ echo '""'$PATH'"'"
 #	>
 
+
 #	"cd .."
 #	zsh: command not found: cd ..
 
+
+#bash-3.2$ echo $PATHaç
+#�
+#bash-3.2$ echo $PATHa
+
+
+
 #SEÑALES
-# 	ctrl -\ == ctr + 4 hace esto: ^\Quit: 3 (cuando estas en bash) 
-#	Ctrl+4 sends ^\		->		^\ quits
 #	SIGINT kills the foreground process group and SIGQUIT kills it with a core dump
 
 
@@ -43,3 +50,20 @@
 #________ya esta no?_________
 #hacer cosas con el =, en el export tambien y suerte xd tu problema
 #checkear argv ???
+
+#bash-3.2$ ls > 1 | < 1 wc -l > 2
+#bash-3.2$ cat 2
+#       0
+
+#bash-3.2$ echo "$PATH"
+#/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/share/dotnet:/usr/local/munki:~/.dotnet/tools:/Library/Frameworks/Mono.framework/Versions/Current/Commands
+#bash-3.2$ echo '$PATH'
+#$PATH
+#bash-3.2$ echo "\""
+#"
+#bash-3.2$ echo '\''
+#>
+#bash-3.2$ echo "..\"..."
+#.."...
+#bash-3.2$ echo '-....\''
+#>

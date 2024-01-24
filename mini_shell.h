@@ -55,7 +55,7 @@ char	*gnl_substr(char const *s, unsigned int str, size_t len);
 void	free_strs(char **strs);
 void	skip_spaces(char *txt, int *i);
 
-char	*remove_quotes(char *txt);
+int		manage_quotes(char *txt);
 char	*expanad_variables(char *txt, t_mini_shell *ms);
 
 

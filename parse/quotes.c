@@ -1,22 +1,38 @@
 #include "../mini_shell.h"
 
+//static void	loop_quotes(char **txt)
+//{
 
+//}
 
-char	*remove_quotes(char *txt)
+static void count_quotes(char *txt, int *s_quot, int *d_quot)
 {
-	int		i;
-	char	*new_txt;
-	char	**aux;
+	int	i;
 
-	i = 1;
-	aux = ft_split(txt, '\"');
-	new_txt = ft_strdup(aux[0]);
-	while (aux[i])
+	i = 0;
+	while (txt[i])
 	{
-		new_txt = gnl_strjoin(new_txt, aux[i]);
-		i++;
+		if (txt[i] == '\"')
+			(*d_quot)++;
+		if (txt[i] == '\'')
+			(*s_quot)++;
+		++i;
 	}
-	free_strs(aux);
-	free(txt);
-	return (new_txt);
+}
+
+int	manage_quotes(char *txt)
+{
+	int		s_quot;
+	int		d_quot;
+
+	s_quot = 0;
+	d_quot = 0;
+	count_quotes(txt, &s_quot, &d_quot);
+
+	if (s_quot % 2 != 0 || d_quot % 2 != 0)
+	{
+		printf("minishell> Error: incomplete quotes\n");
+		return(1);
+	}
+	return (0);
 }

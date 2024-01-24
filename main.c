@@ -24,8 +24,9 @@ static void	set_basics(t_mini_shell *ms)
 	int pwd = 0;
 	int shlvl = 0;
 	int user = 0;
+	char	*rute;
 
-	while (ms->envp[i])
+	while (ms->envp[i] != 0)
 	{
 		if (!ft_strncmp(ms->envp[i], "PWD=", 4))
 			pwd = 1;
@@ -35,8 +36,11 @@ static void	set_basics(t_mini_shell *ms)
 			user = 1;
 		i++;
 	}
+	rute = getcwd(NULL, 0);
 	if (pwd == 0)
-		do_export("PWD=/Users/sgil-moy/Desktop/git-minishell", ms);
+		do_export(ft_strjoin("PWD=", rute), ms);
+	if (rute)
+		free (rute);
 	if (shlvl == 0)
 		do_export("SHLVL=1", ms);
 	if (user == 0)
@@ -79,6 +83,7 @@ static void	copy_envp(char **envp, t_mini_shell *ms)
 	ms->envp = (char**)malloc(sizeof(char*) * (len + 1));
 	if (!ms->envp)
 		return ;
+	ms->envp[len] = NULL;
 	len = 0;
 	while (envp[len])
 	{
@@ -108,7 +113,7 @@ int	main(int argc, char **argv, char **envp)
 	}
 	while (1)
 	{
-		txt = readline("minishell>");
+		txt = readline("minishell> ");
 		if (txt && *txt != '\0')
 		{
 			add_history(txt);
