@@ -17,9 +17,10 @@ static void	fill_struct(char *txt, t_mini_shell *ms)
 	char	*newtxt;
 
 	i = 0;
+	ms->awk = 0;
 	newtxt = expanad_variables(txt, ms);
-	//if (ft_strncmp(newtxt, "awk ", 4))
-	//	newtxt = clean_quotes(newtxt, ms);
+	if (!ft_strncmp(newtxt, "awk ", 4))
+		ms->awk = 1;
 	//printf("new txt: %s\n", newtxt);
 	find_infile(newtxt, ms);
 	find_outfile(newtxt, ms);

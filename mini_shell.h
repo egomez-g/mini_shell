@@ -38,6 +38,7 @@ typedef struct s_mini_shell
 	pid_t				*childs;
 	int					status;
 	int					quote;
+	int					awk;
 	struct sigaction	sig;
 }t_mini_shell;
 

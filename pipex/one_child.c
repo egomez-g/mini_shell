@@ -32,7 +32,7 @@ void	do_one_child(t_mini_shell *ms)
 {
 	int		fd_in;
 	int		fd_out;
-	//char	**aux;
+	char	**aux;
 	int		i;
 
 	i = 0;
@@ -47,20 +47,17 @@ void	do_one_child(t_mini_shell *ms)
 		dup2(fd_out, 1);
 		close(fd_out);
 	}
-	//dprintf(1, "cmd[0] = %s\n", ms->cmds[0].cmd);
-	//if (ft_strchr(ms->cmds[0].cmd, '\'') || ft_strchr(ms->cmds[0].cmd, '\"'))
-	//{
-	//	dprintf(1, "kekekekekekekekekek\n");
-	//	aux = ft_split(ms->cmds[0].cmd, '\'');
-	//	skip_spaces(aux[0], &i);
-	//	aux[0] = aux[0] + i;
-	//	i = 0;
-	//	skip_spaces(aux[2], &i);
-	//	aux[2] = aux[2] + i;
-	//	execve(ms->cmds[0].path, aux, ms->envp);
-	//}
-	//else
+	if (ms->awk)
+	{
+		aux = ft_split(ms->cmds[0].cmd, '\'');
+		skip_spaces(aux[0], &i);
+		aux[0] = aux[0] + i;
+		i = 0;
+		skip_spaces(aux[2], &i);
+		aux[2] = aux[2] + i;
+		execve(ms->cmds[0].path, aux, ms->envp);
+	}
+	else
 		execve(ms->cmds[0].path, ft_split(ms->cmds[0].cmd, ' '), ms->envp);
 	exit_child(ms);
 }
-
