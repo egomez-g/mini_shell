@@ -58,6 +58,7 @@ void	skip_spaces(char *txt, int *i);
 
 int		manage_quotes(char *txt, t_mini_shell *ms);
 char	*clean_quotes(char *txt, t_mini_shell *ms);
+char	*get_literal(char *txt, int *i);
 char	*expanad_variables(char *txt, t_mini_shell *ms);
 
 
@@ -73,7 +74,7 @@ void	do_echo(char *txt, t_mini_shell *ms);
 void	do_exit(char *txt, t_mini_shell *ms);
 
 ///////////////////////////////////PIPEX///////////////////////////////////
-void signals(int sig);
+void	INThandler(int sig);
 ///////////////////////////////////PIPEX///////////////////////////////////
 
 void	pipex(t_mini_shell *ms);

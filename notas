@@ -11,13 +11,16 @@
 
 #	-ls >/dev/stdout | cd .. //NO HACE EL SEGUNDO
 
-#	"cd .."
-#	zsh: command not found: cd ..
-
 #	contar bien el numero de comandos
 
 #SEÑALES
 #	SIGINT kills the foreground process group and SIGQUIT kills it with a core dump
+
+
+
+
+#	"cd .."
+#	zsh: command not found: cd ..
 
 #bash-3.2$ ls > 1 | < 1 wc -l > 2
 
@@ -27,9 +30,3 @@
 #$PATH
 #bash-3.2$ echo "\""
 #"
-#bash-3.2$ echo '\''
-#>
-#bash-3.2$ echo "..\"..."
-#.."...
-#bash-3.2$ echo '-....\''
-#>

@@ -1,16 +1,17 @@
 #include "../mini_shell.h"
 
-void	signals(int sig)
+void  INThandler(int sig)
 {
-	sig = 0;
-	printf("asdasdasdasdasdasdasd\n");
+	signal(sig, SIG_IGN);
+		exit(0);
 }
+
 //sigaction(SIGINT, const struct sigaction *restrict act,
 //struct sigaction *restrict oldact);
 
 /*
 ctrl-c: sends SIGINT to interrupt them,
-ctrl-\: sends SIGQUIT to kill them,
+ctrl-\: sends SIGQUIT to kill them, -> no hacer nada
 ctrl-z: sends SIGTSTP to suspend them.
 
 Sometimes, all a handler has to do is set a flag 

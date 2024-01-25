@@ -1,35 +1,60 @@
 #include "../mini_shell.h"
 
-static void count_quotes(char *txt, int *s_quot, int *d_quot)
+char	*get_literal(char *txt, int *i)
 {
-	int	i;
+	char	comilla;
+	char	*literal;
+	int		j;
 
-	i = 0;
-	while (txt[i])
+	j = 0;
+	comilla = txt[*i];
+	(*i)++;
+	while (txt[*i + j] != comilla)
+		j++;
+	literal = gnl_substr(txt + (*i), 0, j);
+	*i += j + 1;
+	return (literal);
+}
+
+static int count_quotes(char *txt, int *i, t_mini_shell *ms)
+{
+	if (txt[*i] == '\'')
 	{
-		if (txt[i] == '\"')
-			(*d_quot)++;
-		if (txt[i] == '\'')
-			(*s_quot)++;
-		++i;
+		(*i)++;
+		while (txt[*i] && txt[*i] != '\'')
+			(*i)++;
+		if (!txt[*i])
+		{
+			printf("mini_shell> Error: incomplete quotes\n");
+			return (1);
+		}
+		ms->quote = 1;
 	}
+	else if (txt[*i] == '\"')
+	{
+		(*i)++;
+		while (txt[*i] && txt[*i] != '\"')
+			(*i)++;
+		if (!txt[*i])
+		{
+			printf("mini_shell> Error: incomplete quotes\n");
+			return (1);
+		}
+		ms->quote = 1;
+	}
+	return (0);
 }
 
 int	manage_quotes(char *txt, t_mini_shell *ms)
 {
-	int		s_quot;
-	int		d_quot;
-
-	s_quot = 0;
-	d_quot = 0;
+	int	i;
 	ms->quote = 0;
-	count_quotes(txt, &s_quot, &d_quot);
-	if (s_quot > 0 || d_quot > 0)
-		ms->quote = 1;
-	if (s_quot % 2 != 0 || d_quot % 2 != 0)
+	i = 0;
+	while (txt[i])
 	{
-		printf("minishell> Error: incomplete quotes\n");
-		return(1);
+		if (count_quotes(txt, &i, ms))
+			return (1);
+		i++;
 	}
 	return (0);
 }

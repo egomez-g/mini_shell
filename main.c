@@ -114,7 +114,8 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		txt = readline("minishell> ");
-		if (txt && *txt != '\0')
+     	signal(SIGINT, INThandler);
+	 	if (txt && *txt != '\0')
 		{
 			add_history(txt);
 			find_lines(txt, &ms);
