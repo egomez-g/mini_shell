@@ -3,7 +3,7 @@
 void  INThandler(int sig)
 {
 	signal(sig, SIG_IGN);
-		exit(0);
+	exit(0);
 }
 
 //sigaction(SIGINT, const struct sigaction *restrict act,

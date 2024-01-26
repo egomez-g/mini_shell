@@ -10,15 +10,16 @@ static char	*find_var(char *str, t_mini_shell *ms)
 	var = NULL;
 	while (ms->envp[i])
 	{
-		if (!ft_strncmp(str, ms->envp[i], ft_strlen(str) - 1))
+		if (!ft_strncmp(str, ms->envp[i], ft_strlen(str) - 1) && (ft_strlen(str) - 1 > 0))
 		{
 			aux = ft_split(ms->envp[i], '=');
 			var = ft_strdup(aux[1]);
 			free_strs(aux);
+			return (var);
 		}
 		i++;
 	}
-	return (var);
+	return (ft_strdup(""));
 }
 
 static char	*sust_var(char *txt, int i, char *var)
@@ -31,7 +32,7 @@ static char	*sust_var(char *txt, int i, char *var)
 	len = 0;
 	before = gnl_substr(txt, 0, i);
 	while (txt[i + len] && !(txt[i + len] == ' ' || \
-	(txt[i + len] <= 13 && txt[i + len] >= 9)))
+	(txt[i + len] <= 13 && txt[i + len] >= 9) || txt[i + len] == '\'' || txt[i + len] == '\"'))
 		len++;
 	after = gnl_substr(txt, i + len, ft_strlen(txt));
 	result = ft_strdup(before);
@@ -42,7 +43,7 @@ static char	*sust_var(char *txt, int i, char *var)
 	return (result);
 }
 
-char	*expanad_variables(char *txt, t_mini_shell *ms)
+char	*expand_variables(char *txt, t_mini_shell *ms)
 {
 	int		i;
 	int		end;
@@ -54,19 +55,25 @@ char	*expanad_variables(char *txt, t_mini_shell *ms)
 	new_txt = txt;
 	while (txt[i])
 	{
+		if (txt[i] == '\'' || txt[i] == '\"')
+			i += skip_quotes(txt + i, txt[i]);
 		if (txt[i] == '$' && !(txt[i + 1] && txt[i + 1] == '?'))//esto esta raro creo????
 		{
-			end = 0;
-			while (txt[i + end] && !(txt[i + end] == ' ' || \
-			(txt[i + end] <= 13 && txt[i + end] >= 9)))
-				end++;
-			substr = ft_substr(txt, i + 1, end);
-			var = find_var(substr, ms);
-			free(substr);
-			if (var)
-				new_txt = sust_var(txt, i, var);
+			if ((txt[i + 1] && txt[i + 1] == '$'))
+				i++;
+			else
+			{
+				end = 0;
+				while (txt[i + end] && !(txt[i + end] == ' ' || \
+				(txt[i + end] <= 13 && txt[i + end] >= 9) || txt[i + end] == '\'' || txt[i + end] == '\"'))
+					end++;
+				substr = ft_substr(txt, i + 1, end);
+				var = find_var(substr, ms);
+				free(substr);
+				txt = sust_var(txt, i, var);
+			}
 		}
 		i++;
 	}
-	return (new_txt);
+	return (clean_quotes(txt, ms));
 }

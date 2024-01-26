@@ -6,17 +6,26 @@ void	get_cmd(char *txt, t_mini_shell *ms, int index, int *i)
 	char	*aux;
 
 	end = 0;
-	while (txt[*i + end] && (ft_valid_name_char(txt[*i + end]) || \
+	while (txt[*i + end] && (txt[*i + end] != ' '|| \
 	txt[*i + end] == '-'))
+	{
+		if (txt[*i + end] == '\'' || txt[*i + end] == '\"')
+			end += skip_quotes(txt + *i + end, txt[*i + end]);
 		++end;
+	}
 	if (ms->cmds[index].cmd != NULL)
 		ms->cmds[index].cmd = gnl_strjoin(ms->cmds[index].cmd, " ");
 	aux = gnl_substr(txt, *i, end);
-	if (!ms->awk)
+	if (!ms->cmds[index].awk)
 		ms->cmds[index].cmd = clean_quotes(gnl_strjoin(ms->cmds[index].cmd, aux), ms);
 	else
+	{
+		ms->cmds[index].cmd = gnl_strjoin(ms->cmds[index].cmd, "\'");
 		ms->cmds[index].cmd = gnl_strjoin(ms->cmds[index].cmd, aux);
+	}
 	free(aux);
+	if (!ft_strncmp(txt + *i, "awk ", 4))
+		ms->cmds[index].awk = 1;
 	*i += end;
 }
 

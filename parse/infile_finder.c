@@ -9,11 +9,13 @@ static char	*get_infile(char *txt, int start, t_mini_shell *ms)
 	i = start + 1;
 	end = 0;
 	while (txt[i] && (txt[i] == ' ' || (txt[i] <= 13 && *txt >= 9)))
-		i++;	
-	if (txt[i] == '\'' || txt[i] == '\"')
-		return (get_literal(txt, &i));
-	while (txt[i + end] && ft_valid_name_char(txt[i + end]) == 1)
+		i++;
+	while (txt[i + end] && txt[i + end] != ' ')
+	{
+		if (txt[i + end] == '\'' || txt[i + end] == '\"')
+			end += skip_quotes(txt + i + end, txt[i + end]);
 		end++;
+	}
 	if (end > 0)
 		infile = ft_substr(txt, i, end);
 	else

@@ -25,6 +25,7 @@ typedef struct s_cmds
 	char			**infiles;
 	char			**outfiles;
 	int				fd_in;
+	int				awk;
 	int				tuvo[2];
 }t_cmds;
 
@@ -38,7 +39,6 @@ typedef struct s_mini_shell
 	pid_t				*childs;
 	int					status;
 	int					quote;
-	int					awk;
 	struct sigaction	sig;
 }t_mini_shell;
 
@@ -60,7 +60,8 @@ void	skip_spaces(char *txt, int *i);
 int		manage_quotes(char *txt, t_mini_shell *ms);
 char	*clean_quotes(char *txt, t_mini_shell *ms);
 char	*get_literal(char *txt, int *i);
-char	*expanad_variables(char *txt, t_mini_shell *ms);
+int		skip_quotes(char *txt, char com);
+char	*expand_variables(char *txt, t_mini_shell *ms);
 
 
 ///////////////////////////////////BUILTINS///////////////////////////////////

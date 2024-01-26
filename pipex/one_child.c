@@ -15,19 +15,6 @@ static void	open_files(int *fd_in, t_mini_shell *ms)
 	close(*fd_in);
 }
 
-char	**splited_cmd(char *txt)
-{
-	char **result;
-
-	result = (char **)malloc(3 * sizeof(char**));
-	if (!result)
-		return (NULL);
-	result[0] = ft_strdup("awk");
-	result[1] = ft_substr(txt, 3, ft_strlen(txt));
-	result[2] = NULL;
-	return (result);
-}
-
 void	do_one_child(t_mini_shell *ms)
 {
 	int		fd_in;
@@ -47,7 +34,7 @@ void	do_one_child(t_mini_shell *ms)
 		dup2(fd_out, 1);
 		close(fd_out);
 	}
-	if (ms->awk)
+	if (ms->cmds[0].awk)
 	{
 		aux = ft_split(ms->cmds[0].cmd, '\'');
 		skip_spaces(aux[0], &i);

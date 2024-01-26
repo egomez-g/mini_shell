@@ -1,32 +1,16 @@
 #falta:
 
-#	las dobles comillas van dobladas no se como se parsea segfault
-
 #	-gestionar el awk
 #cat del | awk '$2 == "Error!" {print $1}'
+#        awk '$1 == ".PHONY:" {print $1}' Makefile
 
 #	-las señales (ctrl c, ctrl d, ctrl -\)
 
 #	-norminette kekw
 
-#	-ls >/dev/stdout | cd .. //NO HACE EL SEGUNDO
+#	-HERE_DOC
 
 #	contar bien el numero de comandos
 
 #SEÑALES
 #	SIGINT kills the foreground process group and SIGQUIT kills it with a core dump
-
-
-
-
-#	"cd .."
-#	zsh: command not found: cd ..
-
-#bash-3.2$ ls > 1 | < 1 wc -l > 2
-
-#echo $$ y echo $polla $culo ah y si el dollar no existe hay que quitarlo xd???
-
-#bash-3.2$ echo '$PATH'
-#$PATH
-#bash-3.2$ echo "\""
-#"

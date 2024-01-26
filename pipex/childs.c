@@ -94,8 +94,8 @@ void	do_middle_child(t_mini_shell *ms, int child_index)
 	close(ms->old_tubes[0]);
 	close(ms->old_tubes[1]);
 	find_path(ms, child_index);
-	execve(ms->cmds[child_index].path, ft_split(ms->cmds[child_index].cmd, ' '), \
-	ms->envp);
+	execve(ms->cmds[child_index].path, \
+	ft_split(ms->cmds[child_index].cmd, ' '), ms->envp);
 	exit_child(ms);
 }
 
@@ -120,7 +120,7 @@ void	do_last_child(t_mini_shell *ms, int child_index)
 	close(ms->new_tubes[0]);
 	close(ms->new_tubes[1]);
 	find_path(ms, child_index);
-	execve(ms->cmds[child_index].path, ft_split(ms->cmds[child_index].cmd, ' '), \
-	ms->envp);
+	execve(ms->cmds[child_index].path, \
+	ft_split(ms->cmds[child_index].cmd, ' '), ms->envp);
 	exit_child(ms);
 }

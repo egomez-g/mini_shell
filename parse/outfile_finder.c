@@ -10,17 +10,17 @@ static char	*get_outfile(char *txt, int start, t_mini_shell *ms)
 	end = 0;
 	while (txt[i] && (txt[i] == ' ' || (txt[i] <= 13 && *txt >= 9)))
 		i++;
-	if (txt[i] == '\'' || txt[i] == '\"')
-		return (get_literal(txt, &i));
-	while (txt[i + end] && ft_valid_name_char(txt[i + end]) == 1)
+	while (txt[i + end] && txt[i + end] != ' ')
+	{
+		if (txt[i + end] == '\'' || txt[i + end] == '\"')
+			end += skip_quotes(txt + i + end, txt[i + end]);
 		end++;
+	}
 	if (end > 0)
 		outfile = ft_substr(txt, i, end);
 	else
 		outfile = NULL;
-	//if (ft_strchr(outfile, '\'') || ft_strchr(outfile, '\"'))
-		return (clean_quotes(outfile, ms));
-	return (outfile);
+	return (clean_quotes(outfile, ms));
 }
 
 void	count_outfiles(char *txt, t_mini_shell *ms)
