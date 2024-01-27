@@ -10,7 +10,7 @@ static char	*get_outfile(char *txt, int start, t_mini_shell *ms)
 	end = 0;
 	while (txt[i] && (txt[i] == ' ' || (txt[i] <= 13 && *txt >= 9)))
 		i++;
-	while (txt[i + end] && txt[i + end] != ' ')
+	while (txt[i + end] && txt[i + end] != ' ' && txt[i + end] != '|')
 	{
 		if (txt[i + end] == '\'' || txt[i + end] == '\"')
 			end += skip_quotes(txt + i + end, txt[i + end]);
@@ -19,7 +19,10 @@ static char	*get_outfile(char *txt, int start, t_mini_shell *ms)
 	if (end > 0)
 		outfile = ft_substr(txt, i, end);
 	else
-		outfile = NULL;
+	{
+		printf("minishell> Error: syntax error\n");
+		exit (1);
+	}
 	return (clean_quotes(outfile, ms));
 }
 
@@ -34,6 +37,8 @@ void	count_outfiles(char *txt, t_mini_shell *ms)
 	index = 0;
 	while (txt[i])
 	{
+		if (txt[i] == '\'' || txt[i] == '\"')
+			i += skip_quotes(txt + i, txt[i]);
 		if (txt[i] == '|' || txt[i] == ';')
 		{
 			ms->cmds[index].outfiles = (char **)malloc(sizeof(char *) * \

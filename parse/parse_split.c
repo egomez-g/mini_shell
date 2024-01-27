@@ -40,6 +40,7 @@ void	find_lines(char *txt, t_mini_shell *ms)
 		}
 		free(str);
 		waitpid(child, &ms->status, 0);
+		free(txt);
 	}
 	if (do_builtins(txt + start, ms) == -1)
 	{
@@ -47,5 +48,6 @@ void	find_lines(char *txt, t_mini_shell *ms)
 		if (child == 0)
 			parse(txt + start, ms);
 		waitpid(child, &(ms->status), 0);
+		free(txt);
 	}
 }

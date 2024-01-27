@@ -39,7 +39,7 @@ $(NAME): $(OBJS) libft/libft.a
 	$(CC) $(OBJS) -o $(NAME) -Llibft/ -lft -lreadline
 
 libft/libft.a:
-	make -C libft/
+	make -sC libft/
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -58,3 +58,9 @@ re: fclean $(NAME)
 
 del:
 	@./a.out
+
+clear:
+	@clear
+
+run: clear $(NAME)
+	@./$(NAME)

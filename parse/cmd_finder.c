@@ -6,7 +6,7 @@ void	get_cmd(char *txt, t_mini_shell *ms, int index, int *i)
 	char	*aux;
 
 	end = 0;
-	while (txt[*i + end] && (txt[*i + end] != ' '|| \
+	while (txt[*i + end] && txt[*i + end] != '|' && (txt[*i + end] != ' '|| \
 	txt[*i + end] == '-'))
 	{
 		if (txt[*i + end] == '\'' || txt[*i + end] == '\"')
@@ -19,12 +19,9 @@ void	get_cmd(char *txt, t_mini_shell *ms, int index, int *i)
 	if (!ms->cmds[index].awk)
 		ms->cmds[index].cmd = clean_quotes(gnl_strjoin(ms->cmds[index].cmd, aux), ms);
 	else
-	{
-		ms->cmds[index].cmd = gnl_strjoin(ms->cmds[index].cmd, "\'");
 		ms->cmds[index].cmd = gnl_strjoin(ms->cmds[index].cmd, aux);
-	}
 	free(aux);
-	if (!ft_strncmp(txt + *i, "awk ", 4))
+	if (!ft_strncmp(ms->cmds[index].cmd, "awk", 3))
 		ms->cmds[index].awk = 1;
 	*i += end;
 }
@@ -46,7 +43,7 @@ void	skip_file(char *txt, int *i)
 	*i += 1;
 	if (txt[*i] && ft_valid_name_char(txt[*i]))
 	{
-		while (ft_valid_name_char(txt[*i]))
+		while (ft_valid_name_char(txt[*i]) && txt[*i] != '|')
 			*i += 1;
 		return ;
 	}
@@ -67,6 +64,7 @@ void	find_cmd(char *txt, t_mini_shell *ms)
 	index = 0;
 	while (i < ms->num_cmds)
 	{
+		ms->cmds[i].awk = 0;
 		ms->cmds[i].cmd = NULL;
 		i++;
 	}

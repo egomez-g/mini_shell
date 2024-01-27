@@ -30,11 +30,11 @@ static char	*sust_var(char *txt, int i, char *var)
 	char	*result;
 
 	len = 0;
-	before = gnl_substr(txt, 0, i);
+	before = ft_substr(txt, 0, i);
 	while (txt[i + len] && !(txt[i + len] == ' ' || \
 	(txt[i + len] <= 13 && txt[i + len] >= 9) || txt[i + len] == '\'' || txt[i + len] == '\"'))
 		len++;
-	after = gnl_substr(txt, i + len, ft_strlen(txt));
+	after = ft_substr(txt, i + len, ft_strlen(txt));
 	result = ft_strdup(before);
 	result = gnl_strjoin(result, var);
 	result = gnl_strjoin(result, after);
@@ -49,10 +49,8 @@ char	*expand_variables(char *txt, t_mini_shell *ms)
 	int		end;
 	char	*substr;
 	char	*var;
-	char	*new_txt;
 
 	i = 0;
-	new_txt = txt;
 	while (txt[i])
 	{
 		if (txt[i] == '\'' || txt[i] == '\"')
@@ -75,5 +73,5 @@ char	*expand_variables(char *txt, t_mini_shell *ms)
 		}
 		i++;
 	}
-	return (clean_quotes(txt, ms));
+	return (txt);
 }

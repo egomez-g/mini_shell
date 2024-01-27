@@ -25,6 +25,11 @@ static void	fill_struct(char *txt, t_mini_shell *ms)
 	while (i < ms->num_cmds)
 	{
 		j = 0;
+		if (!ms->cmds[i].cmd)
+		{
+			printf("minishell> Error, bad use of pipe\n");
+			exit (1);
+		}
 		printf("CMD: %s\n", ms->cmds[i].cmd);
 		while (ms->cmds[i].infiles[j])
 		{
@@ -34,6 +39,7 @@ static void	fill_struct(char *txt, t_mini_shell *ms)
 		j = 0;
 		while (ms->cmds[i].outfiles[j])
 		{
+			printf("TRUNQ: %d\n", ms->cmds[i].trunc);
 			printf("OUTFILE: %s\n", ms->cmds[i].outfiles[j]);
 			j++;
 		}
@@ -49,6 +55,8 @@ static void	cmd_count(char *str, t_mini_shell *ms)
 		return (perror("Error"));
 	while (*str)
 	{
+		if (*str == '\'' || *str == '\"')
+			str += skip_quotes(str, *str);
 		if (*str == '|' || *str == ';')
 			ms->num_cmds++;
 		str++;

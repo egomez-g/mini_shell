@@ -119,7 +119,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			add_history(txt);
 			find_lines(txt, &ms);
-			free (txt);
+			//free (txt);
 		}
 	}
 }

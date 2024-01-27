@@ -26,7 +26,7 @@ int	open_outfiles(t_mini_shell *ms, int index)
 	int	fd;
 
 	i = 0;
-	while (ms->cmds[index].outfiles[i])
+	while (ms->cmds[index].outfiles[i] && ms->cmds[index].outfiles[i + 1])
 	{
 		fd = open(ms->cmds[index].outfiles[i], \
 		O_WRONLY | O_TRUNC | O_CREAT, 0644);
@@ -36,13 +36,11 @@ int	open_outfiles(t_mini_shell *ms, int index)
 		i++;
 	}
 	if (ms->cmds[index].trunc == 1)
-	{
-		fd = open(ms->cmds[index].outfiles[i - 1], \
+		fd = open(ms->cmds[index].outfiles[i], \
 		O_WRONLY | O_TRUNC | O_CREAT, 0644);
-	}
 	else
-		fd = open(ms->cmds[index].outfiles[i - 1], \
-		O_WRONLY | O_APPEND | O_CREAT, 0644);
+		fd = open(ms->cmds[index].outfiles[i], \
+		O_WRONLY | O_CREAT | O_APPEND, 0644);
 	return (fd);
 }
 
@@ -66,24 +64,25 @@ void	do_first_child(t_mini_shell *ms)
 	close(ms->new_tubes[0]);
 	close(ms->new_tubes[1]);
 	find_path(ms, 0);
-	execve(ms->cmds[0].path, ft_split(ms->cmds[0].cmd, ' '), ms->envp);
+	if (ms->cmds[0].awk)
+		execve(ms->cmds[0].path, do_awk(ms, 0), ms->envp);
+	else
+		execve(ms->cmds[0].path, ft_split(ms->cmds[0].cmd, ' '), ms->envp);
 	exit_child(ms);
 }
 
-void	do_middle_child(t_mini_shell *ms, int child_index)
+void	do_middle_child(t_mini_shell *ms, int ci)
 {
 	int	fd_in;
 	int	fd_out;
 
-	fd_in = 0;
-	fd_out = 0;
-	if (ms->cmds[child_index].infiles[0] || ms->cmds[child_index].here_doc)
-		manage_fd_in(&fd_in, ms, child_index);
+	if (ms->cmds[ci].infiles[0] || ms->cmds[ci].here_doc)
+		manage_fd_in(&fd_in, ms, ci);
 	else
 		dup2(ms->old_tubes[0], 0);
-	if (ms->cmds[child_index].outfiles[0] != NULL)
+	if (ms->cmds[ci].outfiles[0] != NULL)
 	{
-		fd_out = open_outfiles(ms, child_index);
+		fd_out = open_outfiles(ms, ci);
 		dup2(fd_out, 1);
 		close(fd_out);
 	}
@@ -93,9 +92,11 @@ void	do_middle_child(t_mini_shell *ms, int child_index)
 	close(ms->new_tubes[1]);
 	close(ms->old_tubes[0]);
 	close(ms->old_tubes[1]);
-	find_path(ms, child_index);
-	execve(ms->cmds[child_index].path, \
-	ft_split(ms->cmds[child_index].cmd, ' '), ms->envp);
+	find_path(ms, ci);
+	if (ms->cmds[ci].awk)
+		execve(ms->cmds[ci].path, do_awk(ms, ci), ms->envp);
+	else
+		execve(ms->cmds[ci].path, ft_split(ms->cmds[ci].cmd, ' '), ms->envp);
 	exit_child(ms);
 }
 
@@ -120,7 +121,10 @@ void	do_last_child(t_mini_shell *ms, int child_index)
 	close(ms->new_tubes[0]);
 	close(ms->new_tubes[1]);
 	find_path(ms, child_index);
-	execve(ms->cmds[child_index].path, \
-	ft_split(ms->cmds[child_index].cmd, ' '), ms->envp);
+	if (ms->cmds[child_index].awk)
+		execve(ms->cmds[child_index].path, do_awk(ms, child_index), ms->envp);
+	else
+		execve(ms->cmds[child_index].path, \
+		ft_split(ms->cmds[child_index].cmd, ' '), ms->envp);
 	exit_child(ms);
 }

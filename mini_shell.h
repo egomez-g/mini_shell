@@ -84,6 +84,8 @@ void	pipex(t_mini_shell *ms);
 int		do_forks(t_mini_shell *ms);
 int		open_outfiles(t_mini_shell *ms, int index);
 int		open_infiles(t_mini_shell *ms, int index);
+char	**alloc_awk(char **strs, t_mini_shell *ms, int child_index);
+char	**do_awk(t_mini_shell *ms, int child_index);
 
 //rutes
 void	find_path(t_mini_shell *ms, int cmd_index);
@@ -92,7 +94,7 @@ char	**get_paths(t_mini_shell *ms);
 //childs
 void	do_one_child(t_mini_shell *ms);
 void	do_first_child(t_mini_shell *ms);
-void	do_middle_child(t_mini_shell *ms, int child_index);
+void	do_middle_child(t_mini_shell *ms, int ci);
 void	do_last_child(t_mini_shell *ms, int child_index);
 void	exit_child(t_mini_shell *ms);
 

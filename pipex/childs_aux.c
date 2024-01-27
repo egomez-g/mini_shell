@@ -19,7 +19,6 @@ void	manage_fd_in(int *fd_in, t_mini_shell *ms, int child_index)
 	{
 		*fd_in = ms->cmds[child_index].tuvo[0];
 		dup2(*fd_in, 0);
-		close(ms->cmds[child_index].tuvo[0]);
 		close(ms->cmds[child_index].tuvo[1]);
 	}
 	else

@@ -10,7 +10,7 @@ static char	*get_infile(char *txt, int start, t_mini_shell *ms)
 	end = 0;
 	while (txt[i] && (txt[i] == ' ' || (txt[i] <= 13 && *txt >= 9)))
 		i++;
-	while (txt[i + end] && txt[i + end] != ' ')
+	while (txt[i + end] && txt[i + end] != ' ' && txt[i + end] != '|')
 	{
 		if (txt[i + end] == '\'' || txt[i + end] == '\"')
 			end += skip_quotes(txt + i + end, txt[i + end]);
@@ -19,7 +19,10 @@ static char	*get_infile(char *txt, int start, t_mini_shell *ms)
 	if (end > 0)
 		infile = ft_substr(txt, i, end);
 	else
-		infile = NULL;
+	{
+		printf("minishell> Error: syntax error\n");
+		exit (1);
+	}
 	return (clean_quotes(infile, ms));
 }
 
@@ -96,8 +99,8 @@ void	find_infile(char *txt, t_mini_shell *ms)
 		if (txt[i] == '|' || txt[i] == ';')
 		{
 			file_index = 0;
-			ms->cmds[index].here_doc = 0;
 			index++;
+			ms->cmds[index].here_doc = 0;
 		}
 		if (txt[i] == '<')
 		{
