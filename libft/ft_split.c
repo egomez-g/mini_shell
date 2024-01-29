@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgil-moy <sgil-moy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: egomez-g <egomez-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 15:43:19 by sgil-moy          #+#    #+#             */
-/*   Updated: 2023/09/18 11:52:35 by sgil-moy         ###   ########.fr       */
+/*   Updated: 2024/01/29 11:52:47 by egomez-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "libft.h"
 
 static size_t	count_words(char const *s, char c)
@@ -58,7 +59,7 @@ static char	*cpyword(char const *s, size_t *j, char c)
 	char	*word;
 	size_t	k;
 
-	word = (char *)malloc(sizeof(char) * count_letters(&s[*j], c));
+	word = (char *)malloc(sizeof(char) * count_letters(s + *j, c));
 	if (word == NULL)
 		return (NULL);
 	while (s[*j] == c)
@@ -73,7 +74,6 @@ static char	*cpyword(char const *s, size_t *j, char c)
 	*j += k;
 	return (word);
 }
-
 char	**ft_split(char const *s, char c)
 {
 	size_t	i;

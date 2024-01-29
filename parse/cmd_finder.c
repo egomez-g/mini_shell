@@ -7,7 +7,7 @@ void	get_cmd(char *txt, t_mini_shell *ms, int index, int *i)
 
 	end = 0;
 	while (txt[*i + end] && txt[*i + end] != '|' && (txt[*i + end] != ' '|| \
-	txt[*i + end] == '-'))
+	txt[*i + end] == '-') && ft_valid_name_char(txt[*i + end]))
 	{
 		if (txt[*i + end] == '\'' || txt[*i + end] == '\"')
 			end += skip_quotes(txt + *i + end, txt[*i + end]);

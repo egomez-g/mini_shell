@@ -60,12 +60,14 @@ static char	*chdir_rute(char *rute)
 	char	*sol;
 
 	steps1 = ft_split(rute, ' ');
+	printf("RUTE: %s\n", steps1[1]);
 	if (!steps1[1])
 	{
 		free_strs(steps1);
 		return (NULL);
 	}
-	sol = gnl_substr(steps1[1], 0, ft_strlen(steps1[1]));
+	sol = ft_strdup(steps1[1]);
+
 	free_strs(steps1);
 	return (sol);
 }
@@ -74,7 +76,9 @@ void	do_cd(char *txt, t_mini_shell *ms)
 {
 	char	*rute;
 
+	printf("TXT: %s\n", txt);
 	rute = chdir_rute(txt);
+		printf("RUTE: %s\n", rute);
 	if (!rute)
 	{
 		rute = get_home(ms->envp);

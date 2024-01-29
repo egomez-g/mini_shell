@@ -114,7 +114,7 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		txt = readline("minishell> ");
-     	signal(SIGINT, INThandler);
+     	signal(SIGINT, int_handler);
 	 	if (txt && *txt != '\0')
 		{
 			add_history(txt);
