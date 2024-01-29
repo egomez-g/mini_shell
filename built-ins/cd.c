@@ -58,9 +58,11 @@ static char	*chdir_rute(char *rute)
 {
 	char	**steps1;
 	char	*sol;
+	char	*aux;
 
-	steps1 = ft_split(rute, ' ');
-	printf("RUTE: %s\n", steps1[1]);
+	aux = ft_strdup(rute);
+	steps1 = ft_split(aux, ' ');
+	free(aux);
 	if (!steps1[1])
 	{
 		free_strs(steps1);
@@ -76,9 +78,7 @@ void	do_cd(char *txt, t_mini_shell *ms)
 {
 	char	*rute;
 
-	printf("TXT: %s\n", txt);
 	rute = chdir_rute(txt);
-		printf("RUTE: %s\n", rute);
 	if (!rute)
 	{
 		rute = get_home(ms->envp);

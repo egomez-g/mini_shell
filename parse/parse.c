@@ -46,6 +46,7 @@ static void	fill_struct(char *txt, t_mini_shell *ms)
 		printf("______________________________\n\n");
 		i++;
 	}
+	free(newtxt);
 }
 
 static void	cmd_count(char *str, t_mini_shell *ms)

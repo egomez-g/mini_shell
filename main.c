@@ -25,6 +25,7 @@ static void	set_basics(t_mini_shell *ms)
 	int shlvl = 0;
 	int user = 0;
 	char	*rute;
+	char	*aux;
 
 	while (ms->envp[i] != 0)
 	{
@@ -38,7 +39,11 @@ static void	set_basics(t_mini_shell *ms)
 	}
 	rute = getcwd(NULL, 0);
 	if (pwd == 0)
-		do_export(ft_strjoin("PWD=", rute), ms);
+	{
+		aux = ft_strjoin("PWD=", rute);
+		do_export(aux, ms);
+		free(aux);
+	}
 	if (rute)
 		free (rute);
 	if (shlvl == 0)
@@ -104,7 +109,7 @@ int	main(int argc, char **argv, char **envp)
 	argc = 0;
 	argv = NULL;
 	copy_envp(envp, &ms);
-	//atexit(leaks);
+	atexit(leaks);
 	ms.status = 0;
 	if (argc > 1)
 	{
@@ -114,12 +119,12 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		txt = readline("minishell> ");
-     	signal(SIGINT, int_handler);
-	 	if (txt && *txt != '\0')
+		signal(SIGINT, int_handler);
+		if (txt && *txt != '\0')
 		{
 			add_history(txt);
 			find_lines(txt, &ms);
-			//free (txt);
+			free (txt);
 		}
 	}
 }

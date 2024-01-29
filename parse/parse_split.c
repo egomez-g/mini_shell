@@ -21,7 +21,7 @@ void	find_lines(char *txt, t_mini_shell *ms)
 	int		start;
 	int		end;
 	char	*str;
-	pid_t	child;
+	pid_t	child = 0;
 
 	start = 0;
 	end = 0;
@@ -48,6 +48,6 @@ void	find_lines(char *txt, t_mini_shell *ms)
 		if (child == 0)
 			parse(txt + start, ms);
 		waitpid(child, &(ms->status), 0);
-		free(txt);
+		//free(txt);
 	}
 }

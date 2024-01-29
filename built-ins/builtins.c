@@ -24,5 +24,5 @@ int	do_builtins(char *txt, t_mini_shell *ms)
 		return (free_strs(str), free(aux), do_echo(aux, ms), 0);
 	else if (!(ft_strcmp(str[0], "exit")))
 		return (free_strs(str), free(aux), do_exit(aux, ms), 0);
-	return (free_strs(str), -1);
+	return (free_strs(str), free(aux), -1);
 }

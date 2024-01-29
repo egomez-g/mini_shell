@@ -65,7 +65,7 @@ char	*expand_variables(char *txt, t_mini_shell *ms)
 				while (txt[i + end] && !(txt[i + end] == ' ' || \
 				(txt[i + end] <= 13 && txt[i + end] >= 9) || txt[i + end] == '\'' || txt[i + end] == '\"'))
 					end++;
-				substr = ft_substr(txt, i + 1, end);
+				substr = gnl_substr(txt, i + 1, end);
 				var = find_var(substr, ms);
 				free(substr);
 				txt = sust_var(txt, i, var);
