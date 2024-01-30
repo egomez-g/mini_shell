@@ -42,6 +42,13 @@ typedef struct s_mini_shell
 	struct sigaction	sig;
 }	t_mini_shell;
 
+typedef struct	s_sig
+{
+	int				sigint;
+	int				sigquit;
+	pid_t			pid;
+}				t_sig;
+
 ///////////////////////////////////ENVP///////////////////////////////////
 void	copy_envp(char **envp, t_mini_shell *ms);
 
@@ -80,6 +87,8 @@ void	do_exit(char *txt, t_mini_shell *ms);
 
 ///////////////////////////////////SEÑALES///////////////////////////////////
 void	int_handler(int sig);
+void	signal_ctlc_heredoc(int sig);
+void	quit_handler(int sig);
 
 ///////////////////////////////////PIPEX///////////////////////////////////
 
@@ -103,5 +112,8 @@ void	exit_child(t_mini_shell *ms);
 
 void	manage_fd_in(int *fd_in, t_mini_shell *ms, int child_index);
 int		ft_valid_name_char(int c);
+
+//XD???
+void	rl_replace_line(const char *text, int clear_undo);
 
 #endif

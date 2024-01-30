@@ -1,12 +1,8 @@
 #falta:
 
-#	-las señales (ctrl c, ctrl d, ctrl -\)
-
 #	-norminette kekw
 
 #	no creo que tenemos leaks pero yo no los voy a arreglar xd
 
 #	ejecutar builtins donde toque sobre todo el echo
 
-#SEÑALES
-#	SIGINT kills the foreground process group and SIGQUIT kills it with a core dump

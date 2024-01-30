@@ -4,6 +4,7 @@ void	heredoc(char *limitador, t_mini_shell *ms, int index)
 {
 	char	*buff;
 
+	signal(SIGINT, signal_ctlc_heredoc);
 	pipe(ms->cmds[index].tuvo);
 	while (1)
 	{
