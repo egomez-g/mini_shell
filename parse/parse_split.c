@@ -16,17 +16,27 @@ static int	strchr(char *str, int c)
 	return (-1);
 }
 
+//static void	exit_manage(char *txt)
+//{
+//	int	i;
+
+//	i = 0;
+//	skip_spaces(txt, &i);
+//	clean_quotes(txt);
+//}
+
 void	find_lines(char *txt, t_mini_shell *ms)
 {
 	int		start;
 	int		end;
 	char	*str;
-	pid_t	child = 0;
-
+	pid_t	child;
+	
 	start = 0;
 	end = 0;
 	if (manage_quotes(txt, ms) == 1)
 		return ;
+	//exit_manage();
 	while (strchr(txt + start, ';') != -1)
 	{
 		end = strchr(txt + start, ';');

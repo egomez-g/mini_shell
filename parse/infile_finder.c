@@ -45,7 +45,16 @@ static char	*get_limit(char *txt, int start, t_mini_shell *ms)
 		return (clean_quotes(ft_substr(txt, 0, 0), ms));
 }
 
-void	count_infiles(char *txt, t_mini_shell *ms)
+static void	add_infile(t_mini_shell *ms, int index, int count)
+{
+	ms->cmds[index].infiles = (char **)malloc(sizeof(char *) * \
+	(count + 1));
+	if (!ms->cmds[index].infiles)
+		return ;
+	ms->cmds[index].infiles[count] = NULL;
+}
+
+static void	count_infiles(char *txt, t_mini_shell *ms)
 {
 	int	i;
 	int	index;
@@ -58,11 +67,7 @@ void	count_infiles(char *txt, t_mini_shell *ms)
 	{
 		if (txt[i] == '|' || txt[i] == ';')
 		{
-			ms->cmds[index].infiles = (char **)malloc(sizeof(char *) * \
-			(count + 1));
-			if (!ms->cmds[index].infiles)
-				return ;
-			ms->cmds[index].infiles[count] = NULL;
+			add_infile(ms, index, count);
 			++index;
 			count = 0;
 		}
@@ -75,10 +80,7 @@ void	count_infiles(char *txt, t_mini_shell *ms)
 		}
 		++i;
 	}
-	ms->cmds[index].infiles = (char **)malloc(sizeof(char *) * (count + 1));
-	if (!ms->cmds[index].infiles)
-		return ;
-	ms->cmds[index].infiles[count] = NULL;
+	add_infile(ms, index, count);
 }
 
 void	find_infile(char *txt, t_mini_shell *ms)

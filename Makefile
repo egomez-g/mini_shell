@@ -4,6 +4,7 @@ CFLAGS = -Wall -Werror -Wextra
 NAME = mini_shell
 
 SRCS =	main.c						\
+		envp.c						\
 		parse/parse.c				\
 		parse/infile_finder.c		\
 		parse/cmd_finder.c			\
@@ -12,7 +13,9 @@ SRCS =	main.c						\
 		parse/here_doc/gnl.c		\
 		parse/here_doc/gnl_utils.c	\
 		parse/parse_split.c 		\
+		parse/parse_utils.c 		\
 		parse/quotes.c 				\
+		parse/quotes_aux.c			\
 		parse/variables.c 			\
 		pipex/childs.c				\
 		pipex/childs_aux.c			\

@@ -20,7 +20,7 @@ char	**alloc_awk(char **strs, t_mini_shell *ms, int child_index)
 	int		i;
 
 	i = 0;
-	while(ms->cmds[child_index].infiles[i])
+	while (ms->cmds[child_index].infiles[i])
 		i++;
 	sol = malloc(sizeof(char *) * 4);
 	sol[0] = ft_strdup(strs[0]);
@@ -51,7 +51,8 @@ char	**do_awk(t_mini_shell *ms, int child_index)
 		sol[2] = ft_substr(sol[2], i, ft_strlen(sol[2]));
 		free(aux);
 	}
-	if (!(ms->cmds[child_index].infiles[0] != NULL || ms->cmds[child_index].here_doc == 1))
+	if (!(ms->cmds[child_index].infiles[0] != NULL || \
+		ms->cmds[child_index].here_doc == 1))
 		return (sol);
 	return (alloc_awk(sol, ms, child_index));
 }
@@ -65,7 +66,6 @@ void	do_one_child(t_mini_shell *ms)
 	i = 0;
 	fd_in = 0;
 	fd_out = 0;
-	find_path(ms, 0);
 	if (ms->cmds[0].infiles[0] != NULL || ms->cmds[0].here_doc == 1)
 		open_files(&fd_in, ms);
 	if (ms->cmds[0].outfiles[0] != NULL)
@@ -74,6 +74,8 @@ void	do_one_child(t_mini_shell *ms)
 		dup2(fd_out, 1);
 		close(fd_out);
 	}
+	do_builtins(ms->cmds[0].cmd, ms);
+	find_path(ms, 0);
 	if (ms->cmds[0].awk)
 		execve(ms->cmds[0].path, do_awk(ms, 0), ms->envp);
 	else

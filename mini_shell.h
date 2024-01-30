@@ -27,7 +27,7 @@ typedef struct s_cmds
 	int				fd_in;
 	int				awk;
 	int				tuvo[2];
-}t_cmds;
+}	t_cmds;
 
 typedef struct s_mini_shell
 {
@@ -40,8 +40,12 @@ typedef struct s_mini_shell
 	int					status;
 	int					quote;
 	struct sigaction	sig;
-}t_mini_shell;
+}	t_mini_shell;
 
+///////////////////////////////////ENVP///////////////////////////////////
+void	copy_envp(char **envp, t_mini_shell *ms);
+
+///////////////////////////////////PARSE//////////////////////////////////
 void	find_lines(char *txt, t_mini_shell *ms);
 void	parse(char *txt, t_mini_shell *ms);
 void	find_infile(char *txt, t_mini_shell *ms);
@@ -63,8 +67,7 @@ char	*get_literal(char *txt, int *i);
 int		skip_quotes(char *txt, char com);
 char	*expand_variables(char *txt, t_mini_shell *ms);
 
-
-///////////////////////////////////BUILTINS///////////////////////////////////
+///////////////////////////////////BUILTINS///////////////////////////////
 int		do_builtins(char *txt, t_mini_shell *ms);
 
 void	do_cd(char *txt, t_mini_shell *ms);
@@ -81,7 +84,6 @@ void	int_handler(int sig);
 ///////////////////////////////////PIPEX///////////////////////////////////
 
 void	pipex(t_mini_shell *ms);
-
 int		do_forks(t_mini_shell *ms);
 int		open_outfiles(t_mini_shell *ms, int index);
 int		open_infiles(t_mini_shell *ms, int index);
@@ -100,7 +102,6 @@ void	do_last_child(t_mini_shell *ms, int child_index);
 void	exit_child(t_mini_shell *ms);
 
 void	manage_fd_in(int *fd_in, t_mini_shell *ms, int child_index);
-
 int		ft_valid_name_char(int c);
-//forks
+
 #endif

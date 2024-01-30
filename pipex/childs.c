@@ -1,4 +1,3 @@
-
 #include "../mini_shell.h"
 
 int	open_infiles(t_mini_shell *ms, int index)

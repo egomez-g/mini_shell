@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egomez-g <egomez-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sgil-moy <sgil-moy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 15:43:19 by sgil-moy          #+#    #+#             */
-/*   Updated: 2024/01/29 11:52:47 by egomez-g         ###   ########.fr       */
+/*   Updated: 2024/01/29 16:06:14 by sgil-moy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ static char	*cpyword(char const *s, size_t *j, char c)
 	*j += k;
 	return (word);
 }
+
 char	**ft_split(char const *s, char c)
 {
 	size_t	i;

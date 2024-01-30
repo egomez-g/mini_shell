@@ -1,12 +1,22 @@
 #include "../mini_shell.h"
 
+static char	*buitin_txt(char *txt, t_mini_shell *ms)
+{
+	char	*aux;
+	char	*expanded;
+
+	expanded = expand_variables(txt, ms);
+	aux = ft_strdup(expanded);
+	aux = clean_quotes(aux, ms);
+	return (aux);
+}
+
 int	do_builtins(char *txt, t_mini_shell *ms)
 {
 	char	**str;
 	char	*aux;
 
-	aux = ft_strdup(expand_variables(txt, ms));
-	aux = clean_quotes(aux, ms);
+	aux = buitin_txt(txt, ms);
 	str = ft_split(aux, ' ');
 	if (!str[0] || ft_strchr(aux, '|'))
 		return (free_strs(str), -1);

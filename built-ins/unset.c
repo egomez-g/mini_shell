@@ -56,7 +56,6 @@ void	do_unset(char *txt, t_mini_shell *ms)
 
 	i = 1;
 	count = 0;
-	//el split ha decidido dejar de funcionar
 	var_env = ft_split(txt, ' ');
 	while (var_env[i])
 	{

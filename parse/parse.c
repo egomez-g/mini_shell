@@ -2,7 +2,7 @@
 
 int	ft_valid_name_char(int c)//esto dentro del awk
 {
-	if (( c != '<' && c != '>' && \
+	if ((c != '<' && c != '>' && \
 	c != '(' && c != ')' && c != '&' && c <= 126 && c >= 33) || \
 	c == -61 || c == -111 || c == -79)
 		return (1);

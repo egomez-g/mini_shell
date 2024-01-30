@@ -58,18 +58,14 @@ static char	*chdir_rute(char *rute)
 {
 	char	**steps1;
 	char	*sol;
-	char	*aux;
 
-	aux = ft_strdup(rute);
-	steps1 = ft_split(aux, ' ');
-	free(aux);
+	steps1 = ft_split(rute, ' ');
 	if (!steps1[1])
 	{
 		free_strs(steps1);
 		return (NULL);
 	}
 	sol = ft_strdup(steps1[1]);
-
 	free_strs(steps1);
 	return (sol);
 }

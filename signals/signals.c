@@ -1,6 +1,6 @@
 #include "../mini_shell.h"
 
-void  int_handler(int sig)
+void	int_handler(int sig)
 {
 	signal(sig, SIG_IGN);
 	exit(0);

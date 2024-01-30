@@ -39,10 +39,10 @@ static char	**malloc_vars(int count, char **txt, t_mini_shell *ms)
 	return (new_envp);
 }
 
-static int biggest_envp(t_mini_shell *ms)
+static int	biggest_envp(t_mini_shell *ms)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;
@@ -55,26 +55,27 @@ static int biggest_envp(t_mini_shell *ms)
 	return (j);
 }
 
-static void print_ordered(t_mini_shell *ms)
+static void	print_ordered(t_mini_shell *ms)
 {
-	int i;
-	int j;
-	int anterior;
-	int print_index;
+	int	i;
+	int	j;
+	int	anterior;
+	int	print_index;
 	int	max;
 
 	j = 0;
 	anterior = -1;
 	max = biggest_envp(ms);
-	while(ms->envp[j]) 
+	while (ms->envp[j])
 	{
 		i = 0;
 		print_index = max;
 		while (ms->envp[i])
 		{
 			if (ft_strcmp(ms->envp[i], ms->envp[print_index]) < 0 && \
-				(anterior == -1 || ft_strcmp(ms->envp[i], ms->envp[anterior]) > 0))
- 				print_index = i;
+				(anterior == -1 || \
+				ft_strcmp(ms->envp[i], ms->envp[anterior]) > 0))
+				print_index = i;
 			i++;
 		}
 		printf("declare -x \"%s\"\n", ms->envp[print_index]);
@@ -82,7 +83,6 @@ static void print_ordered(t_mini_shell *ms)
 		j++;
 	}
 }
-
 
 void	do_export(char *txt, t_mini_shell *ms)
 {
