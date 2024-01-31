@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   outfile_finder.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sgil-moy <sgil-moy@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/31 17:12:53 by sgil-moy          #+#    #+#             */
+/*   Updated: 2024/01/31 17:12:54 by sgil-moy         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../mini_shell.h"
 
 static char	*get_outfile(char *txt, int start, t_mini_shell *ms)
@@ -20,7 +32,7 @@ static char	*get_outfile(char *txt, int start, t_mini_shell *ms)
 		outfile = ft_substr(txt, i, end);
 	else
 	{
-		printf("minishell> Error: syntax error\n");
+		printf("🤬minishell> Error: syntax error\n");
 		exit (1);
 	}
 	return (clean_quotes(outfile, ms));

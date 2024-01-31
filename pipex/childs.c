@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   childs.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sgil-moy <sgil-moy@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/31 17:12:23 by sgil-moy          #+#    #+#             */
+/*   Updated: 2024/01/31 17:12:24 by sgil-moy         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../mini_shell.h"
 
 void	do_first_child(t_mini_shell *ms)
@@ -29,7 +41,7 @@ void	do_first_child(t_mini_shell *ms)
 	exit_child(ms);
 }
 
-static void close_mid_child(t_mini_shell *ms)
+static void	close_mid_child(t_mini_shell *ms)
 {
 	close(ms->new_tubes[0]);
 	close(ms->new_tubes[1]);

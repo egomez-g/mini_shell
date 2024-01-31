@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   variables.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sgil-moy <sgil-moy@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/31 17:13:12 by sgil-moy          #+#    #+#             */
+/*   Updated: 2024/01/31 17:13:13 by sgil-moy         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../mini_shell.h"
 
 static char	*find_var(char *str, t_mini_shell *ms)
@@ -30,7 +42,6 @@ static char	*sust_var(char *txt, int i, char *var)
 	int		len;
 	char	*result;
 
-	printf("xd?: %s\n", txt);
 	len = 0;
 	before = ft_substr(txt, 0, i);
 	while (txt[i + len] && !(txt[i + len] == ' ' || \

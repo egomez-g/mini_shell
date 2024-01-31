@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sgil-moy <sgil-moy@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/31 17:11:11 by sgil-moy          #+#    #+#             */
+/*   Updated: 2024/01/31 17:11:12 by sgil-moy         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "mini_shell.h"
 
 void	leaks(void)
@@ -13,24 +25,21 @@ int	main(int argc, char **argv, char **envp)
 	argv = NULL;
 	copy_envp(envp, &ms);
 	ms.status = 0;
-	//signal(SIGQUIT, int_handler);
-	//signal(SIGINT, int_handler);
+	signal(SIGINT, int_handler);
 	if (argc > 1)
-	{
-		printf("🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬minishell> Too many arguments🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬\n");
-		exit(1);
-	}
+		return (printf("🤬minishell> Too many arguments\n"), 1);
 	while (1)
 	{
 		txt = readline("🤬minishell> ");
 		if (!txt)
-			break;
+			break ;
 		if (*txt != '\0')
 		{
 			add_history(txt);
 			find_lines(txt, &ms);
 		}
+		else
+			free (txt);
 	}
-	leaks();
 	exit (0);
 }

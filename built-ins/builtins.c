@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtins.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sgil-moy <sgil-moy@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/31 17:13:45 by sgil-moy          #+#    #+#             */
+/*   Updated: 2024/01/31 17:13:46 by sgil-moy         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../mini_shell.h"
 
 int	do_builtins(char *txt, t_mini_shell *ms)
@@ -6,7 +18,6 @@ int	do_builtins(char *txt, t_mini_shell *ms)
 	char	*aux;
 
 	aux = expand_variables(txt, ms);
-	//aux = clean_quotes(aux, ms);
 	str = ft_split(aux, ' ');
 	if (!str[0] || ft_strchr(aux, '|'))
 		return (free_strs(str), -1);
@@ -16,8 +27,11 @@ int	do_builtins(char *txt, t_mini_shell *ms)
 		return (free_strs(str), do_unset(aux, ms), free(aux), 0);
 	else if (!(ft_strcmp(str[0], "exit")))
 		return (free_strs(str), do_exit(aux, ms), free(aux), 0);
+	else if (!(ft_strcmp(str[0], "export")) && str[1])
+		return (free_strs(str), do_export(txt, ms), free(aux), 0);
 	return (free_strs(str), -1);
 }
+
 int	exec_builtin(char *txt, t_mini_shell *ms)
 {
 	char	**str;

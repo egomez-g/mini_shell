@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sgil-moy <sgil-moy@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/31 17:13:01 by sgil-moy          #+#    #+#             */
+/*   Updated: 2024/01/31 17:13:02 by sgil-moy         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../mini_shell.h"
 
 int	ft_valid_name_char(int c)//esto dentro del awk
@@ -13,12 +25,22 @@ int	ft_valid_name_char(int c)//esto dentro del awk
 static void	fill_struct(char *txt, t_mini_shell *ms)
 {
 	char	*newtxt;
+	int		i;
 
 	newtxt = expand_variables(txt, ms);
 	find_infile(newtxt, ms);
 	find_outfile(newtxt, ms);
 	find_cmd(newtxt, ms);
-	//free(newtxt);
+	i = 0;
+	while (i < ms->num_cmds)
+	{
+		if (!ms->cmds[i].cmd)
+		{
+			printf("🤬minishell> Error: bad use of pipe\n");
+			exit (1);
+		}
+		i++;
+	}
 }
 
 static void	cmd_count(char *str, t_mini_shell *ms)

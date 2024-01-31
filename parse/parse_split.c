@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_split.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sgil-moy <sgil-moy@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/31 17:12:56 by sgil-moy          #+#    #+#             */
+/*   Updated: 2024/01/31 17:12:57 by sgil-moy         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../mini_shell.h"
 
-static int	strchr(char *str, int c)
+static int	ms_strchr(char *str, int c)
 {
 	int	i;
 
@@ -16,22 +28,17 @@ static int	strchr(char *str, int c)
 	return (-1);
 }
 
-void	find_lines(char *txt, t_mini_shell *ms)
+static void	loop_lines(t_mini_shell *ms, char *txt, int *start)
 {
-	int		start;
 	int		end;
 	char	*str;
 	pid_t	child;
 
-	start = 0;
-	end = 0;
-	if (manage_quotes(txt, ms) == 1)
-		return ;
-	while (strchr(txt + start, ';') != -1)
+	while (ms_strchr(txt + *start, ';') != -1)
 	{
-		end = strchr(txt + start, ';');
-		str = gnl_substr(txt, start, end);
-		start += end + 1;
+		end = ms_strchr(txt + *start, ';');
+		str = gnl_substr(txt, *start, end);
+		*start += end + 1;
 		if (do_builtins(str, ms) == -1)
 		{
 			child = fork();
@@ -40,9 +47,20 @@ void	find_lines(char *txt, t_mini_shell *ms)
 		}
 		free(str);
 		waitpid(child, &ms->status, 0);
-		if (txt)
-			free(txt);
 	}
+}
+
+void	find_lines(char *txt, t_mini_shell *ms)
+{
+	int		start;
+	int		end;
+	pid_t	child;
+
+	start = 0;
+	end = 0;
+	if (manage_quotes(txt, ms) == 1)
+		return ;
+	loop_lines(ms, txt, &start);
 	if (do_builtins(txt + start, ms) == -1)
 	{
 		child = fork();

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   quotes.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sgil-moy <sgil-moy@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/31 17:13:09 by sgil-moy          #+#    #+#             */
+/*   Updated: 2024/01/31 17:13:10 by sgil-moy         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../mini_shell.h"
 
 static int	count_quotes(char *txt, int *i, t_mini_shell *ms)
@@ -38,7 +50,10 @@ int	manage_quotes(char *txt, t_mini_shell *ms)
 	while (txt[i])
 	{
 		if (count_quotes(txt, &i, ms))
+		{
+			free(txt);
 			return (1);
+		}
 		i++;
 	}
 	return (0);
