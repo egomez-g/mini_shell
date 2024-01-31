@@ -30,27 +30,43 @@ static char	*sust_var(char *txt, int i, char *var)
 	int		len;
 	char	*result;
 
+	printf("xd?: %s\n", txt);
 	len = 0;
 	before = ft_substr(txt, 0, i);
 	while (txt[i + len] && !(txt[i + len] == ' ' || \
 	(txt[i + len] <= 13 && txt[i + len] >= 9) || \
 	txt[i + len] == '\'' || txt[i + len] == '\"'))
 		len++;
-	after = ft_substr(txt, i + len, ft_strlen(txt));
+	after = gnl_substr(txt, i + len, ft_strlen(txt));
 	result = ft_strdup(before);
 	result = gnl_strjoin(result, var);
 	result = gnl_strjoin(result, after);
 	free(before);
 	free(after);
+	free(var);
 	return (result);
+}
+
+static char	*expand_var(char *txt, int i, t_mini_shell *ms)
+{
+	int		end;
+	char	*substr;
+	char	*var;
+
+	end = 0;
+	while (txt[i + end] && !(txt[i + end] == ' ' || \
+	(txt[i + end] <= 13 && txt[i + end] >= 9) || \
+	txt[i + end] == '\'' || txt[i + end] == '\"'))
+		end++;
+	substr = gnl_substr(txt, i + 1, end);
+	var = find_var(substr, ms);
+	free(substr);
+	return (sust_var(txt, i, var));
 }
 
 char	*expand_variables(char *txt, t_mini_shell *ms)
 {
 	int		i;
-	int		end;
-	char	*substr;
-	char	*var;
 
 	i = 0;
 	while (txt[i])
@@ -62,17 +78,7 @@ char	*expand_variables(char *txt, t_mini_shell *ms)
 			if ((txt[i + 1] && txt[i + 1] == '$'))
 				i++;
 			else
-			{
-				end = 0;
-				while (txt[i + end] && !(txt[i + end] == ' ' || \
-				(txt[i + end] <= 13 && txt[i + end] >= 9) || \
-				txt[i + end] == '\'' || txt[i + end] == '\"'))
-					end++;
-				substr = gnl_substr(txt, i + 1, end);
-				var = find_var(substr, ms);
-				free(substr);
-				txt = sust_var(txt, i, var);
-			}
+				txt = expand_var(txt, i, ms);
 		}
 		i++;
 	}

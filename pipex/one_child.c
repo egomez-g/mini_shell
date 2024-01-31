@@ -74,7 +74,8 @@ void	do_one_child(t_mini_shell *ms)
 		dup2(fd_out, 1);
 		close(fd_out);
 	}
-	do_builtins(ms->cmds[0].cmd, ms);
+	if (exec_builtin(ms->cmds[0].cmd, ms) == 0)
+		exit (0);
 	find_path(ms, 0);
 	if (ms->cmds[0].awk)
 		execve(ms->cmds[0].path, do_awk(ms, 0), ms->envp);

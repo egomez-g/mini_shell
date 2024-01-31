@@ -15,6 +15,13 @@
 
 # define BUFFER_SIZE 777
 
+enum
+{
+	I = 0,
+	INDEX,
+	FILE_INDEX,
+};
+
 typedef struct s_cmds
 {
 	char			*cmd;
@@ -42,7 +49,7 @@ typedef struct s_mini_shell
 	struct sigaction	sig;
 }	t_mini_shell;
 
-typedef struct	s_sig
+typedef struct s_sig
 {
 	int				sigint;
 	int				sigquit;
@@ -56,6 +63,7 @@ void	copy_envp(char **envp, t_mini_shell *ms);
 void	find_lines(char *txt, t_mini_shell *ms);
 void	parse(char *txt, t_mini_shell *ms);
 void	find_infile(char *txt, t_mini_shell *ms);
+void	count_infiles(char *txt, t_mini_shell *ms);
 void	find_outfile(char *txt, t_mini_shell *ms);
 void	find_cmd(char *txt, t_mini_shell *ms);
 void	heredoc(char *limitador, t_mini_shell *ms, int index);
@@ -76,6 +84,7 @@ char	*expand_variables(char *txt, t_mini_shell *ms);
 
 ///////////////////////////////////BUILTINS///////////////////////////////
 int		do_builtins(char *txt, t_mini_shell *ms);
+int		exec_builtin(char *txt, t_mini_shell *ms);
 
 void	do_cd(char *txt, t_mini_shell *ms);
 void	do_pwd(void);
@@ -88,7 +97,6 @@ void	do_exit(char *txt, t_mini_shell *ms);
 ///////////////////////////////////SEÑALES///////////////////////////////////
 void	int_handler(int sig);
 void	signal_ctlc_heredoc(int sig);
-void	quit_handler(int sig);
 
 ///////////////////////////////////PIPEX///////////////////////////////////
 
@@ -112,8 +120,5 @@ void	exit_child(t_mini_shell *ms);
 
 void	manage_fd_in(int *fd_in, t_mini_shell *ms, int child_index);
 int		ft_valid_name_char(int c);
-
-//XD???
-void	rl_replace_line(const char *text, int clear_undo);
 
 #endif

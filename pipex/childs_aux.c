@@ -9,8 +9,6 @@ void	exit_child(t_mini_shell *ms)
 	close(ms->old_tubes[1]);
 	exit(127);
 }
-//close(pipex->fd_file_in);
-//close(pipex->fd_file_out);
 
 void	manage_fd_in(int *fd_in, t_mini_shell *ms, int child_index)
 {
@@ -24,4 +22,47 @@ void	manage_fd_in(int *fd_in, t_mini_shell *ms, int child_index)
 	else
 		dup2(*fd_in, 0);
 	close(*fd_in);
+}
+
+int	open_infiles(t_mini_shell *ms, int index)
+{
+	int	i;
+	int	fd;
+
+	i = 0;
+	while (ms->cmds[index].infiles[i])
+	{
+		fd = open(ms->cmds[index].infiles[i], O_RDONLY);
+		if (fd == -1)
+			exit_child(ms);
+		close(fd);
+		i++;
+	}
+	if (ms->cmds[index].here_doc == 0)
+		fd = open(ms->cmds[index].infiles[i - 1], O_RDONLY);
+	return (fd);
+}
+
+int	open_outfiles(t_mini_shell *ms, int index)
+{
+	int	i;
+	int	fd;
+
+	i = 0;
+	while (ms->cmds[index].outfiles[i] && ms->cmds[index].outfiles[i + 1])
+	{
+		fd = open(ms->cmds[index].outfiles[i], \
+		O_WRONLY | O_TRUNC | O_CREAT, 0644);
+		if (fd == -1)
+			exit_child(ms);
+		close(fd);
+		i++;
+	}
+	if (ms->cmds[index].trunc == 1)
+		fd = open(ms->cmds[index].outfiles[i], \
+		O_WRONLY | O_TRUNC | O_CREAT, 0644);
+	else
+		fd = open(ms->cmds[index].outfiles[i], \
+		O_WRONLY | O_CREAT | O_APPEND, 0644);
+	return (fd);
 }

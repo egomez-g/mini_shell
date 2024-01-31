@@ -26,14 +26,20 @@ static char	*get_outfile(char *txt, int start, t_mini_shell *ms)
 	return (clean_quotes(outfile, ms));
 }
 
-void	count_outfiles(char *txt, t_mini_shell *ms)
+static void	add_outfile(t_mini_shell *ms, int index, int count)
 {
-	int	i;
+	ms->cmds[index].outfiles = (char **)malloc(sizeof(char *) * (count + 1));
+	if (!ms->cmds[index].outfiles)
+		return ;
+	ms->cmds[index].outfiles[count] = NULL;
+}
+
+static void	count_outfiles(char *txt, t_mini_shell *ms, int i)
+{
 	int	index;
 	int	count;
 
 	count = 0;
-	i = 0;
 	index = 0;
 	while (txt[i])
 	{
@@ -41,11 +47,7 @@ void	count_outfiles(char *txt, t_mini_shell *ms)
 			i += skip_quotes(txt + i, txt[i]);
 		if (txt[i] == '|' || txt[i] == ';')
 		{
-			ms->cmds[index].outfiles = (char **)malloc(sizeof(char *) * \
-			(count + 1));
-			if (!ms->cmds[index].outfiles)
-				return ;
-			ms->cmds[index].outfiles[count] = NULL;
+			add_outfile(ms, index, count);
 			++index;
 			count = 0;
 		}
@@ -58,23 +60,16 @@ void	count_outfiles(char *txt, t_mini_shell *ms)
 		}
 		++i;
 	}
-	ms->cmds[index].outfiles = (char **)malloc(sizeof(char *) * (count + 1));
-	if (!ms->cmds[index].outfiles)
-		return ;
-	ms->cmds[index].outfiles[count] = NULL;
+	add_outfile(ms, index, count);
 }
 
-void	find_outfile(char *txt, t_mini_shell *ms)
+static void	loop_outfiles(t_mini_shell *ms, char *txt, int index)
 {
-	int		i;
-	int		index;
-	int		file_index;
+	int	i;
+	int	file_index;
 
 	i = 0;
-	index = 0;
 	file_index = 0;
-	ms->cmds[0].outfiles = NULL;
-	count_outfiles(txt, ms);
 	while (txt[i])
 	{
 		if (txt[i] == '|' || txt[i] == ';')
@@ -95,4 +90,18 @@ void	find_outfile(char *txt, t_mini_shell *ms)
 		}
 		i++;
 	}
+}
+
+void	find_outfile(char *txt, t_mini_shell *ms)
+{
+	int		i;
+	int		index;
+	int		file_index;
+
+	i = 0;
+	index = 0;
+	file_index = 0;
+	ms->cmds[0].outfiles = NULL;
+	count_outfiles(txt, ms, 0);
+	loop_outfiles(ms, txt, 0);
 }

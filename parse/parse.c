@@ -12,41 +12,13 @@ int	ft_valid_name_char(int c)//esto dentro del awk
 
 static void	fill_struct(char *txt, t_mini_shell *ms)
 {
-	int		i;
-	int		j;
 	char	*newtxt;
 
-	i = 0;
 	newtxt = expand_variables(txt, ms);
 	find_infile(newtxt, ms);
 	find_outfile(newtxt, ms);
 	find_cmd(newtxt, ms);
-	i = 0;
-	while (i < ms->num_cmds)
-	{
-		j = 0;
-		if (!ms->cmds[i].cmd)
-		{
-			printf("minishell> Error, bad use of pipe\n");
-			exit (1);
-		}
-		printf("CMD: %s\n", ms->cmds[i].cmd);
-		while (ms->cmds[i].infiles[j])
-		{
-			printf("INFILE: %s\n", ms->cmds[i].infiles[j]);
-			j++;
-		}
-		j = 0;
-		while (ms->cmds[i].outfiles[j])
-		{
-			printf("TRUNQ: %d\n", ms->cmds[i].trunc);
-			printf("OUTFILE: %s\n", ms->cmds[i].outfiles[j]);
-			j++;
-		}
-		printf("______________________________\n\n");
-		i++;
-	}
-	free(newtxt);
+	//free(newtxt);
 }
 
 static void	cmd_count(char *str, t_mini_shell *ms)

@@ -16,27 +16,17 @@ static int	strchr(char *str, int c)
 	return (-1);
 }
 
-//static void	exit_manage(char *txt)
-//{
-//	int	i;
-
-//	i = 0;
-//	skip_spaces(txt, &i);
-//	clean_quotes(txt);
-//}
-
 void	find_lines(char *txt, t_mini_shell *ms)
 {
 	int		start;
 	int		end;
 	char	*str;
 	pid_t	child;
-	
+
 	start = 0;
 	end = 0;
 	if (manage_quotes(txt, ms) == 1)
 		return ;
-	//exit_manage();
 	while (strchr(txt + start, ';') != -1)
 	{
 		end = strchr(txt + start, ';');
@@ -50,14 +40,15 @@ void	find_lines(char *txt, t_mini_shell *ms)
 		}
 		free(str);
 		waitpid(child, &ms->status, 0);
-		free(txt);
+		if (txt)
+			free(txt);
 	}
 	if (do_builtins(txt + start, ms) == -1)
 	{
 		child = fork();
 		if (child == 0)
 			parse(txt + start, ms);
+		free(txt);
 		waitpid(child, &(ms->status), 0);
-		//free(txt);
 	}
 }

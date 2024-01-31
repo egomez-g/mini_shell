@@ -10,22 +10,14 @@ int	main(int argc, char **argv, char **envp)
 	t_mini_shell	ms;
 	char			*txt;
 
-	argc = 0;
 	argv = NULL;
 	copy_envp(envp, &ms);
-	//atexit(leaks);
 	ms.status = 0;
-	signal(SIGQUIT, int_handler);
-	signal(SIGINT, int_handler);
-	int i = 0;
-	while (i < 300)
-	{
-		signal(i, int_handler);
-		++i;
-	}
+	//signal(SIGQUIT, int_handler);
+	//signal(SIGINT, int_handler);
 	if (argc > 1)
 	{
-		printf("🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬minishell> Too many arguments🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬\n");
+		printf("🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬minishell> Too many arguments🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬\n");
 		exit(1);
 	}
 	while (1)
@@ -37,8 +29,8 @@ int	main(int argc, char **argv, char **envp)
 		{
 			add_history(txt);
 			find_lines(txt, &ms);
-			//free (txt);
 		}
 	}
+	leaks();
 	exit (0);
 }

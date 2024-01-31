@@ -32,16 +32,16 @@ static void	set_basics(t_mini_shell *ms)
 	rute = getcwd(NULL, 0);
 	if (pwd == 0)
 	{
-		aux = ft_strjoin("PWD=", rute);
+		aux = ft_strjoin("export PWD=", rute);
 		do_export(aux, ms);
 		free(aux);
 	}
 	if (rute)
 		free (rute);
 	if (shlvl == 0)
-		do_export("SHLVL=1", ms);
+		do_export("export SHLVL=1", ms);
 	if (user == 0)
-		do_export("_=/usr/bin/env", ms);
+		do_export("export _=/usr/bin/env", ms);
 }
 
 static char	*do_shell_lvl(char *line)

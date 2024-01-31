@@ -7,6 +7,7 @@ SRCS =	main.c						\
 		envp.c						\
 		parse/parse.c				\
 		parse/infile_finder.c		\
+		parse/infile_finder_aux.c	\
 		parse/cmd_finder.c			\
 		parse/outfile_finder.c		\
 		parse/here_doc/here_doc.c	\

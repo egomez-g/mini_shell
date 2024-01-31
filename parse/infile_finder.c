@@ -45,82 +45,49 @@ static char	*get_limit(char *txt, int start, t_mini_shell *ms)
 		return (clean_quotes(ft_substr(txt, 0, 0), ms));
 }
 
-static void	add_infile(t_mini_shell *ms, int index, int count)
+static void	loop_infile(char *txt, int *indexes, t_mini_shell *ms, char *lim)
 {
-	ms->cmds[index].infiles = (char **)malloc(sizeof(char *) * \
-	(count + 1));
-	if (!ms->cmds[index].infiles)
-		return ;
-	ms->cmds[index].infiles[count] = NULL;
-}
-
-static void	count_infiles(char *txt, t_mini_shell *ms)
-{
-	int	i;
-	int	index;
-	int	count;
-
-	count = 0;
-	i = 0;
-	index = 0;
-	while (txt[i])
+	if (txt[indexes[I]] == '|' || txt[indexes[I]] == ';')
 	{
-		if (txt[i] == '|' || txt[i] == ';')
-		{
-			add_infile(ms, index, count);
-			++index;
-			count = 0;
-		}
-		else if (txt[i] == '<')
-		{
-			if (txt[i + 1] == '<')
-				i++;
-			else
-				count++;
-		}
-		++i;
+		indexes[FILE_INDEX] = 0;
+		indexes[INDEX]++;
+		ms->cmds[indexes[INDEX]].here_doc = 0;
 	}
-	add_infile(ms, index, count);
+	if (txt[indexes[I]] == '<')
+	{
+		if (txt[indexes[I] + 1] == '<')
+		{
+			indexes[I]++;
+			lim = get_limit(txt, indexes[I], ms);
+			heredoc(lim, ms, indexes[INDEX]);
+			free(lim);
+			ms->cmds[indexes[INDEX]].here_doc = 1;
+		}
+		else
+		{
+			ms->cmds[indexes[INDEX]].infiles[indexes[FILE_INDEX]] \
+			= get_infile(txt, indexes[I], ms);
+			ms->cmds[indexes[INDEX]].here_doc = 0;
+			indexes[FILE_INDEX]++;
+		}
+	}
 }
 
 void	find_infile(char *txt, t_mini_shell *ms)
 {
 	char	*limitador;
-	int		i;
-	int		index;
-	int		file_index;
+	int		indexes[3];
 
-	i = 0;
-	index = 0;
-	file_index = 0;
-	ms->cmds[index].here_doc = 0;
+	indexes[I] = 0;
+	indexes[INDEX] = 0;
+	indexes[FILE_INDEX] = 0;
+	ms->cmds[indexes[INDEX]].here_doc = 0;
 	ms->cmds[0].infiles = NULL;
+	limitador = NULL;
 	count_infiles(txt, ms);
-	while (txt[i])
+	while (txt[indexes[I]])
 	{
-		if (txt[i] == '|' || txt[i] == ';')
-		{
-			file_index = 0;
-			index++;
-			ms->cmds[index].here_doc = 0;
-		}
-		if (txt[i] == '<')
-		{
-			if (txt[i + 1] == '<')
-			{
-				i++;
-				limitador = get_limit(txt, i, ms);
-				heredoc(limitador, ms, index);
-				free(limitador);
-				ms->cmds[index].here_doc = 1;
-			}
-			else
-			{
-				ms->cmds[index].infiles[file_index] = get_infile(txt, i, ms);
-				ms->cmds[index].here_doc = 0;
-				file_index++;
-			}
-		}
-		i++;
+		loop_infile(txt, indexes, ms, limitador);
+		indexes[I]++;
 	}
 }
