@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   one_child.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egomez-g <egomez-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sgil-moy <sgil-moy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 17:12:15 by sgil-moy          #+#    #+#             */
-/*   Updated: 2024/02/01 15:03:51 by egomez-g         ###   ########.fr       */
+/*   Updated: 2024/02/01 15:23:54 by sgil-moy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	do_one_child(t_mini_shell *ms)
 	find_path(ms, 0);
 	if (ms->cmds[0].awk)
 		execve(ms->cmds[0].path, do_awk(ms, 0), ms->envp);
-	else
+	else if (!strchr(ms->cmds[0].cmd, '|'))
 		execve(ms->cmds[0].path, ft_split(ms->cmds[0].cmd, ' '), ms->envp);
 	exit_child(ms);
 }

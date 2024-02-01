@@ -6,7 +6,7 @@
 /*   By: sgil-moy <sgil-moy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 17:12:23 by sgil-moy          #+#    #+#             */
-/*   Updated: 2024/01/31 17:12:24 by sgil-moy         ###   ########.fr       */
+/*   Updated: 2024/02/01 15:27:13 by sgil-moy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	do_first_child(t_mini_shell *ms)
 	find_path(ms, 0);
 	if (ms->cmds[0].awk)
 		execve(ms->cmds[0].path, do_awk(ms, 0), ms->envp);
-	else
+	else if (!strchr(ms->cmds[0].cmd, '|'))
 		execve(ms->cmds[0].path, ft_split(ms->cmds[0].cmd, ' '), ms->envp);
 	exit_child(ms);
 }
@@ -72,7 +72,7 @@ void	do_middle_child(t_mini_shell *ms, int ci)
 	find_path(ms, ci);
 	if (ms->cmds[ci].awk)
 		execve(ms->cmds[ci].path, do_awk(ms, ci), ms->envp);
-	else
+	else if (!strchr(ms->cmds[ci].cmd, '|'))
 		execve(ms->cmds[ci].path, ft_split(ms->cmds[ci].cmd, ' '), ms->envp);
 	exit_child(ms);
 }
@@ -101,7 +101,7 @@ void	do_last_child(t_mini_shell *ms, int ci)
 	find_path(ms, ci);
 	if (ms->cmds[ci].awk)
 		execve(ms->cmds[ci].path, do_awk(ms, ci), ms->envp);
-	else
+	else if (!strchr(ms->cmds[ci].cmd, '|'))
 		execve(ms->cmds[ci].path, ft_split(ms->cmds[ci].cmd, ' '), ms->envp);
 	exit_child(ms);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egomez-g <egomez-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sgil-moy <sgil-moy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 17:13:01 by sgil-moy          #+#    #+#             */
-/*   Updated: 2024/02/01 15:02:21 by egomez-g         ###   ########.fr       */
+/*   Updated: 2024/02/01 15:27:59 by sgil-moy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ static void	fill_struct(char *txt, t_mini_shell *ms)
 			printf("🐦‍🔥minishell> Error: bad use of pipe\n");
 			exit (1);
 		}
-		printf("CMD: %s\n", ms->cmds[i].cmd);
 		i++;
 	}
 }
