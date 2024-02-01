@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgil-moy <sgil-moy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: egomez-g <egomez-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 17:13:01 by sgil-moy          #+#    #+#             */
-/*   Updated: 2024/01/31 17:13:02 by sgil-moy         ###   ########.fr       */
+/*   Updated: 2024/02/01 15:02:21 by egomez-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,10 @@ static void	fill_struct(char *txt, t_mini_shell *ms)
 	{
 		if (!ms->cmds[i].cmd)
 		{
-			printf("🤬minishell> Error: bad use of pipe\n");
+			printf("🐦‍🔥minishell> Error: bad use of pipe\n");
 			exit (1);
 		}
+		printf("CMD: %s\n", ms->cmds[i].cmd);
 		i++;
 	}
 }
@@ -60,6 +61,22 @@ static void	cmd_count(char *str, t_mini_shell *ms)
 
 void	parse(char *txt, t_mini_shell *ms)
 {
+	int	i;
+	int	spaces;
+
+	i = 0;
+	spaces = 1;
+	while (txt[i])
+	{
+		if (txt[i] != ' ')
+		{
+			spaces = 0;
+			break ;
+		}
+		i++;
+	}
+	if (spaces)
+		exit (1);
 	cmd_count(txt, ms);
 	ms->cmds = malloc (sizeof(t_cmds) * ms->num_cmds);
 	if (!ms->cmds)

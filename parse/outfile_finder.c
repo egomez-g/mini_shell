@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   outfile_finder.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgil-moy <sgil-moy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: egomez-g <egomez-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 17:12:53 by sgil-moy          #+#    #+#             */
-/*   Updated: 2024/01/31 17:12:54 by sgil-moy         ###   ########.fr       */
+/*   Updated: 2024/02/01 14:48:13 by egomez-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ static char	*get_outfile(char *txt, int start, t_mini_shell *ms)
 	end = 0;
 	while (txt[i] && (txt[i] == ' ' || (txt[i] <= 13 && *txt >= 9)))
 		i++;
-	while (txt[i + end] && txt[i + end] != ' ' && txt[i + end] != '|')
+	while (txt[i + end] && txt[i + end] != ' ' && txt[i + end] != '|' \
+	&& txt[i + end] != '>' && txt[i + end] != '<')
 	{
 		if (txt[i + end] == '\'' || txt[i + end] == '\"')
 			end += skip_quotes(txt + i + end, txt[i + end]);
@@ -32,7 +33,7 @@ static char	*get_outfile(char *txt, int start, t_mini_shell *ms)
 		outfile = ft_substr(txt, i, end);
 	else
 	{
-		printf("🤬minishell> Error: syntax error\n");
+		printf("🐦‍🔥minishell> Error: syntax error\n");
 		exit (1);
 	}
 	return (clean_quotes(outfile, ms));
@@ -57,7 +58,7 @@ static void	count_outfiles(char *txt, t_mini_shell *ms, int i)
 	{
 		if (txt[i] == '\'' || txt[i] == '\"')
 			i += skip_quotes(txt + i, txt[i]);
-		if (txt[i] == '|' || txt[i] == ';')
+		else if (txt[i] == '|' || txt[i] == ';')
 		{
 			add_outfile(ms, index, count);
 			++index;
@@ -89,7 +90,9 @@ static void	loop_outfiles(t_mini_shell *ms, char *txt, int index)
 			file_index = 0;
 			index++;
 		}
-		if (txt[i] == '>')
+		else if (txt[i] == '\'' || txt[i] == '\"')
+			i += skip_quotes(txt + i, txt[i]);
+		else if (txt[i] == '>')
 		{
 			ms->cmds->trunc = 1;
 			if (txt[i + 1] == '>')

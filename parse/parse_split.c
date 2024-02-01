@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_split.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgil-moy <sgil-moy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: egomez-g <egomez-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 17:12:56 by sgil-moy          #+#    #+#             */
-/*   Updated: 2024/01/31 17:12:57 by sgil-moy         ###   ########.fr       */
+/*   Updated: 2024/01/31 18:46:03 by egomez-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	find_lines(char *txt, t_mini_shell *ms)
 	end = 0;
 	if (manage_quotes(txt, ms) == 1)
 		return ;
+	g_id_signal = 1;
 	loop_lines(ms, txt, &start);
 	if (do_builtins(txt + start, ms) == -1)
 	{

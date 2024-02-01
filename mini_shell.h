@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_shell.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgil-moy <sgil-moy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: egomez-g <egomez-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 17:11:54 by sgil-moy          #+#    #+#             */
-/*   Updated: 2024/01/31 17:11:55 by sgil-moy         ###   ########.fr       */
+/*   Updated: 2024/01/31 17:53:20 by egomez-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ typedef struct s_sig
 	int				sigquit;
 	pid_t			pid;
 }				t_sig;
+
+int	g_id_signal;
 
 ///////////////////////////////////ENVP///////////////////////////////////
 void	copy_envp(char **envp, t_mini_shell *ms);

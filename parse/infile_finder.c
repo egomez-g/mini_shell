@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   infile_finder.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgil-moy <sgil-moy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: egomez-g <egomez-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 17:12:51 by sgil-moy          #+#    #+#             */
-/*   Updated: 2024/01/31 17:12:52 by sgil-moy         ###   ########.fr       */
+/*   Updated: 2024/02/01 14:50:38 by egomez-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ static char	*get_infile(char *txt, int start, t_mini_shell *ms)
 	end = 0;
 	while (txt[i] && (txt[i] == ' ' || (txt[i] <= 13 && *txt >= 9)))
 		i++;
-	while (txt[i + end] && txt[i + end] != ' ' && txt[i + end] != '|')
+	while (txt[i + end] && txt[i + end] != ' ' && txt[i + end] != '|' \
+	&& txt[i + end] != '<' && txt[i + end] != '>')
 	{
 		if (txt[i + end] == '\'' || txt[i + end] == '\"')
 			end += skip_quotes(txt + i + end, txt[i + end]);
@@ -32,7 +33,7 @@ static char	*get_infile(char *txt, int start, t_mini_shell *ms)
 		infile = ft_substr(txt, i, end);
 	else
 	{
-		printf("🤬minishell> Error: syntax error\n");
+		printf("🐦‍🔥minishell> Error: syntax error\n");
 		exit (1);
 	}
 	return (clean_quotes(infile, ms));
@@ -65,6 +66,8 @@ static void	loop_infile(char *txt, int *indexes, t_mini_shell *ms, char *lim)
 		indexes[INDEX]++;
 		ms->cmds[indexes[INDEX]].here_doc = 0;
 	}
+	else if (txt[indexes[I]] == '\'' || txt[indexes[I]] == '\"')
+		indexes[I] += skip_quotes(txt + indexes[I], txt[indexes[I]]);
 	if (txt[indexes[I]] == '<')
 	{
 		if (txt[indexes[I] + 1] == '<')

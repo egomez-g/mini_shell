@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgil-moy <sgil-moy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: egomez-g <egomez-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 17:13:38 by sgil-moy          #+#    #+#             */
-/*   Updated: 2024/01/31 17:13:39 by sgil-moy         ###   ########.fr       */
+/*   Updated: 2024/02/01 14:34:57 by egomez-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static void	print_echo(char *txt, t_mini_shell *ms)
 		else if (txt[i] == '$' && txt[i + 1] && txt[i + 1] == '?')
 		{
 			printf("%d", WEXITSTATUS(ms->status));
-			i += 2;
+			i += 1;
 		}
 		else
 			printf("%c", txt[i]);

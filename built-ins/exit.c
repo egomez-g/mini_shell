@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgil-moy <sgil-moy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: egomez-g <egomez-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 17:13:30 by sgil-moy          #+#    #+#             */
-/*   Updated: 2024/01/31 17:13:31 by sgil-moy         ###   ########.fr       */
+/*   Updated: 2024/02/01 11:07:38 by egomez-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	do_exit(char *txt, t_mini_shell *ms)
 		i++;
 	if (i > 2)
 	{
-		printf("mini_shell> exit: too many arguments\n");
+		printf("🐦‍🔥minishell> exit: too many arguments\n");
 		return (free_strs(str));
 	}
 	if (!str[1])

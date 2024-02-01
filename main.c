@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgil-moy <sgil-moy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: egomez-g <egomez-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 17:11:11 by sgil-moy          #+#    #+#             */
-/*   Updated: 2024/01/31 17:11:12 by sgil-moy         ###   ########.fr       */
+/*   Updated: 2024/02/01 12:52:35 by egomez-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,14 @@ int	main(int argc, char **argv, char **envp)
 	argv = NULL;
 	copy_envp(envp, &ms);
 	ms.status = 0;
+	signal(SIGQUIT, int_handler);
 	signal(SIGINT, int_handler);
 	if (argc > 1)
-		return (printf("🤬minishell> Too many arguments\n"), 1);
+		return (printf("🐦‍🔥minishell> Too many arguments\n"), 1);
 	while (1)
 	{
-		txt = readline("🤬minishell> ");
+		g_id_signal = 0;
+		txt = readline("🐦‍🔥minishell> ");
 		if (!txt)
 			break ;
 		if (*txt != '\0')

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   variables.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgil-moy <sgil-moy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: egomez-g <egomez-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 17:13:12 by sgil-moy          #+#    #+#             */
-/*   Updated: 2024/01/31 17:13:13 by sgil-moy         ###   ########.fr       */
+/*   Updated: 2024/02/01 14:30:51 by egomez-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ char	*expand_variables(char *txt, t_mini_shell *ms)
 	i = 0;
 	while (txt[i])
 	{
-		if (txt[i] == '\'' || txt[i] == '\"')
+		if (txt[i] == '\'')
 			i += skip_quotes(txt + i, txt[i]);
 		if (txt[i] == '$' && !(txt[i + 1] && txt[i + 1] == '?'))
 		{

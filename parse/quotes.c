@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgil-moy <sgil-moy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: egomez-g <egomez-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 17:13:09 by sgil-moy          #+#    #+#             */
-/*   Updated: 2024/01/31 17:13:10 by sgil-moy         ###   ########.fr       */
+/*   Updated: 2024/02/01 11:07:33 by egomez-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	count_quotes(char *txt, int *i, t_mini_shell *ms)
 			(*i)++;
 		if (!txt[*i])
 		{
-			printf("mini_shell> Error: incomplete quotes\n");
+			printf("🐦‍🔥minishell> Error: incomplete quotes\n");
 			return (1);
 		}
 		ms->quote = 1;
@@ -33,7 +33,7 @@ static int	count_quotes(char *txt, int *i, t_mini_shell *ms)
 			(*i)++;
 		if (!txt[*i])
 		{
-			printf("mini_shell> Error: incomplete quotes\n");
+			printf("🐦‍🔥minishell> Error: incomplete quotes\n");
 			return (1);
 		}
 		ms->quote = 1;

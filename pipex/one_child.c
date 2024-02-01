@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   one_child.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgil-moy <sgil-moy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: egomez-g <egomez-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 17:12:15 by sgil-moy          #+#    #+#             */
-/*   Updated: 2024/01/31 17:12:16 by sgil-moy         ###   ########.fr       */
+/*   Updated: 2024/02/01 15:03:51 by egomez-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void	do_one_child(t_mini_shell *ms)
 	i = 0;
 	fd_in = 0;
 	fd_out = 0;
+
 	if (ms->cmds[0].infiles[0] != NULL || ms->cmds[0].here_doc == 1)
 		open_files(&fd_in, ms);
 	if (ms->cmds[0].outfiles[0] != NULL)
