@@ -41,3 +41,8 @@ Ejecutar el shell con:
 ```bash
 ./minishell
 ```
+Ejecutar comandos de bash para ver funcionalidad
+Exit para salir:
+```bash
+exit
+```
