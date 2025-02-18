@@ -32,7 +32,7 @@ Minishell es un proyecto que consiste en la implementación de un shell simple s
 Clonar el repositorio y compilar el proyecto:
 ```bash
  git clone https://github.com/egomez-g/mini_shell.git
- cd minishell
+ cd mini_shell
  make
 ```
 
